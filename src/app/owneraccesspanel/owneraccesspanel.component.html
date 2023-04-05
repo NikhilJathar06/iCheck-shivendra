@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iCheck</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav mode="side" opened="true"
+            [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+            <div class="siderbar-content">
+                <aside class="sidebar">
+                    <!-- Accordian -->
+                    <div class="sidebar-content">
+                        <!-- <button class="sliderToggle" (click)="sidenav.close(); sliderToggler(); close()">
+                            <img [src]="curentImage" style="width: 39px; height:39px">
+                            <!-- <i [ngClass]="{'fa-angle-double-right':!isIconClose, 'fa-angle-double-left': isIconClose}"
+                                class="fa"></i> 
+                        </button> -->
+                        <div class="dash">
+                            <a routerLink="/ownerdashboard"> <button class="btn1"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                    <h5><img src="assets/icons/dashboard-grid.svg" alt=""> Dashboard</h5>
+                                </button></a>
+                        </div>
+                        <div class="dash">
+                            <a routerLink="/companyconfig"> <button class="btn1"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                    <h5><img src="assets/icons/settings.svg" alt=""> Configuration</h5>
+                                </button></a>
+                        </div>
+                        <div class="dash">
+                            <a routerLink="/vesselconfig"><button class="btn1"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                    <h5><img src="assets/icons/vessel.svg" alt=""> Vessels</h5>
+                                </button></a>
+                        </div>
+                        <div class="dash">
+                            <a routerLink="/ownerinsights"><button class="btn1"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                    <h5><img src="assets/icons/Insights.svg" alt=""> Insights</h5>
+                                </button></a>
+                        </div>
+                        <div class="dash">
+                            <a routerLink="/ownercalendar"> <button class="btn1"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                    <h5><img src="assets/icons/calendar.svg" alt=""> Calendar</h5>
+                                </button></a>
+                        </div>
+                        <div class="dash">
+                            <a><button class="btn1 active"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#36A38D' : '#36A38D','color': isDarkTheme ? 'white' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                    <h5><img src="assets/icons/toggle-off-white.svg" alt=""> Access</h5>
+                                </button></a>
+                        </div>
+                        <div class="dash">
+                            <a routerLink="/ownerimport"><button class="btn1"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                    <h5><img src="assets/icons/import.svg" alt=""> Import</h5>
+                                </button></a>
+                        </div>
+
+
+
+
+                    </div>
+                </aside>
+                <!-- <button class="sliderToggle" (click)="sliderToggler()">
+                <i [ngClass]="{'fa-angle-double-right':!isIconClose, 'fa-angle-double-left': isIconClose}" class="fa"></i>
+              </button> -->
+            </div>
+        </mat-sidenav>
+
+        <mat-sidenav-content style="display: flex; height: 88vh;">
+            <!-- <div style="height:100%; width: 40px; align-items: center;display: flex;">
+                <div [ngStyle]="{'display' : toggleDivDisplay}" style="background-color: white; width:25px; height:850px">
+                <button [ngStyle]="{'display' : togglebuttonDisplay}"  class="sliderToggle" (click)="sidenav.open(); sliderToggler(); open()">
+                    <img [src]="curentImage" style="width: 39px; height:39px"> -->
+            <!-- <i [ngClass]="{'fa-angle-double-right':!isIconClose, 'fa-angle-double-left': isIconClose}"
+                        class="fa"></i> -->
+            <!-- </button>
+            </div>
+            </div> -->
+            <div class="container-fluid">
+                <div class="addCompany">
+                    <h1 [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">Access panel</h1>
+
+                </div>
+                <div class="searchbar">
+                    <i><span><img src="assets/icons/search.svg"></span></i>
+                    <input class="input-field" [(ngModel)]="filterCompanies" type="text"
+                        placeholder="Search company name, company code"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#f8fafb','color': isDarkTheme ? 'white' : 'black'}">
+                    <i><span><img src="assets/icons/search.svg"></span></i>
+                </div>
+
+                <div style="padding-top: 30px;">
+                    <div class="row">
+                        <table class="inspectionTable">
+                            <thead [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+
+                                <th>
+                                    Company Code
+                                </th>
+                                <th>
+                                    Company Name
+                                </th>
+                                <th>
+                                    Subscription rate
+                                </th>
+                                <th>
+                                    Start Date
+                                </th>
+
+                                <th>
+                                    End Date
+                                </th>
+                                <th>
+
+                                </th>
+
+                            </thead>
+                            <tbody>
+                                <!-- [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}" -->
+                                <tr *ngFor="let company of enabledCompanies | filter: filterCompanies" >
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ company.companyCode }}</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ company.companyName }}</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ company.companySubscriptionRate }}</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}"> {{ company.companyStartDate | date: 'MMM dd, y'}}</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">
+                                        {{ company.companyEndDate | date: 'MMM dd, y'}}
+                                    </td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                                        <!-- <mat-slide-toggle [checked]="checked" (change)="change($event)"
+                                            color="primary"></mat-slide-toggle> -->
+                                        <mat-slide-toggle [checked]="company.isEnabled"
+                                            (change)="change($event, company, company._id, company.isEnabled)"
+                                            color="primary"></mat-slide-toggle>
+                                    </td>
+                                </tr>
+
+
+
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+                <div class="disabled">
+                    <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Disabled</h1>
+
+                </div>
+                <div style="padding-top: 0px;">
+                    <div class="row">
+                        <table class="disabledTable">
+                            <thead [ngStyle]= "{'background-color': isDarkTheme ? '#303030' : '#f8fafb','color': isDarkTheme ? '#303030' : '#f8fafb'}">
+
+                                <th>
+                                    Company Code
+                                </th>
+                                <th>
+                                    Company Name
+                                </th>
+                                <th>
+                                    Subscription rate
+                                </th>
+                                <th>
+                                    Start Date
+                                </th>
+
+                                <th>
+                                    End Date
+                                </th>
+                                <th>
+
+                                </th>
+
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let company of disabledCompanies | filter: filterCompanies">
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ company.companyCode }}</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ company.companyName }}</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ company.companySubscriptionRate }}</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ company.companyStartDate | date: 'MMM dd, y'}}</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">
+                                        {{ company.companyEndDate | date: 'MMM dd, y'}}
+                                    </td>
+                                    <td>
+                                        <!-- <mat-slide-toggle [checked]="checked" (change)="change($event)"
+                                            color="primary"></mat-slide-toggle> -->
+                                        <mat-slide-toggle [checked]="company.isEnabled"
+                                            (change)="change($event, company, company._id, company.isEnabled)"
+                                            color="primary"></mat-slide-toggle>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">0010</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">TCS</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">4512</td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}"></td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">
+                                        
+                                    </td>
+                                    <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">
+                                        <mat-slide-toggle 
+                                            color="primary"></mat-slide-toggle>
+                                       
+                                    </td>
+                                </tr>
+
+
+
+
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</body>
+
+</html>

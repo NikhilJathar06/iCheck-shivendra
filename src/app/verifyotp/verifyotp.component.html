@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iCheck</title>
+
+    <!-- responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- For IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+
+</head>
+
+<body [ngStyle]= "{'background-color': isDarkTheme ? '#303030' : 'white'}">
+
+    <div class="container">
+        <section class="vh-100">
+            <div class="container-fluid h-custom">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="gifDiv col-md-9 col-lg-6 col-xl-5">
+                        <img src="assets/image/SquareLogo2.gif" class="img-fluid"
+                            alt="Sample image">
+                    </div>
+                    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+
+                        <form [formGroup]="verifyOTPForm">
+                            <div
+                                class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+
+                            </div>
+
+                            <div class="main" [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">
+
+                                <h3 style="font-size: 30px; font-weight: 700; line-height: 36px; 	font-family: 'Inter';
+                                         ">Forgot Password</h3>
+                                
+                                <button type="button" routerLink="/forgotpassword">
+                                    <img src="assets/icons/delete-circled-outline.svg">
+                                </button>
+                            </div>
+                            <h5 style="font-size: 14px; font-weight: 500; line-height: 17px; padding-bottom: 20px;
+                            	font-family: 'Inter';" [ngStyle]= "{'color': isDarkTheme ? '#DDDDDD' : '#4E4D4D'}">Enter the OTP sent to <b style="color: #36A38D;">{{email}}</b></h5>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <!-- <label class="form-label" for="form3Example3">Email</label>
+                                <div class="d-flex password">
+                                    <input type="email" formControlName="email" id="form3Example3"
+                                        class="form-control-lg input" placeholder="Email" />
+                                </div> -->
+                                <!-- <mat-form-field style="width: 419px;" appearance="outline">
+                                    <mat-label>Please Enter the otp</mat-label>
+                                    <input formControlName="otp" matInput placeholder="Enter a otp">
+                                    <mat-error class="animated shake">
+                                    </mat-error>
+                                </mat-form-field> -->
+                                <div class="d-flex flex-row">
+                                          
+                                    <input type="text" class="form-control" #txt1 maxlength="1" (keyup)="move($event, '' , txt1, txt2)">
+                                
+                                 
+                                    <input type="text" class="form-control" #txt2 maxlength="1" (keyup)="move($event, txt1 , txt2, txt3)">
+                                  
+                                  
+                                    <input type="text" class="form-control" #txt3 maxlength="1" (keyup)="move($event, txt2 , txt2, txt4)">
+                             
+                                 
+                                    <input type="text"  class="form-control" #txt4 maxlength="1" (keyup)="move($event, txt3 , txt4, '')">
+                                 
+                                
+                                </div>
+                                <div  style="padding-top:5px ;" [ngStyle]= "{'color': isDarkTheme ? '
+                                #DDDDDD' : '#5A5A5A'}">
+                                  <span>00:{{remainingTime}} Didn't receive the code?</span><div *ngIf="remainingTime === 0">
+                                   
+                                    <button [disabled]="isResendDisabled" class="resend" (click)="resendOTP()" style="border:0 ;color: 
+                                    #36A38D;" [ngStyle]= "{'background-color': isDarkTheme ? '#303030' : 'white'}"> Re-send</button>
+                                </div></div>
+                                
+
+                            </div>
+
+                            <div class="button-login">
+                                <button type="button"  (click)="verifyOTP()">Verify</button>
+                            </div>
+                            <div role="alert" [ngClass]="className">
+                                <p>{{message}}</p>
+                                <!-- <i class="fa fa-info-circle">   </i> --> <span> <img style="width: 28px;
+height: 28px;" src="assets/icons/InfoCircle.svg" alt=""> </span>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+
+
+</body>
+
+
+</html>

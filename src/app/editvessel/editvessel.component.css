@@ -1,0 +1,119 @@
+
+
+.company-row{
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.container{
+    margin-left: 100px;
+
+}
+
+.provided{
+    /* margin-right: 110px; */
+    float: right;
+    font-size:small;
+    font-weight:500;
+    margin-top: -18px;
+}
+
+.button{
+    
+    background-color: #36A38D;
+    border: none;
+    color: #fff;
+    padding: 7px 23px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 18px;
+    margin-bottom: 20px;
+}
+
+.button:hover{
+    color: whitesmoke;
+    }
+
+
+    h2{
+        font-size: 32px;
+        font-weight: 600;
+        padding-bottom: 20px;
+        color: #2f3640;
+    }
+    
+    h3 {
+ 
+   
+        padding: 20px 0px;
+        font-size: 20px;
+       
+    
+    }
+    h3 a{
+        text-decoration: none;
+        color: #36A38D;
+       
+    }
+
+
+
+    .animated.shake {
+        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+      }
+      
+      @keyframes shake {
+        10%, 90% {
+          transform: translate3d(-1px, 0, 0);
+        }
+        
+        20%, 80% {
+          transform: translate3d(2px, 0, 0);
+        }
+      
+        30%, 50%, 70% {
+          transform: translate3d(-4px, 0, 0);
+        }
+      
+        40%, 60% {
+          transform: translate3d(4px, 0, 0);
+        }
+      }
+    
+
+
+
+@media(max-width: 980px){
+    .company-row{
+        
+
+        flex-direction: column;
+    }
+
+    .form-field-input{
+        width: 100%;
+        display: inline-flex;
+        justify-content:flex-start;
+    }
+
+    .providedDiv{
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    
+
+    .end-row{
+        display: inline-flex;
+        justify-content: flex-start;
+        width: 100%;
+    }
+}
+

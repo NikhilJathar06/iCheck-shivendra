@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iCheck</title>
+
+    <!-- responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- For IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'> 
+   
+</head>
+
+<body>
+    
+
+      <div style="padding-left:20px">
+      
+      </div>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form [formGroup]="signupForm">
+                <div [ngClass]="className" role="alert">
+                    {{ message }}
+                    <!-- <a href="">Login here</a> -->
+                </div>
+                <h1>Create Account</h1>
+                
+                <input type="text" placeholder="Name" formControlName="name"/>
+                <input type="email" placeholder="Email" formControlName="email"/>
+                <input type="text" placeholder="Company Name" formControlName="companyName" />
+                <input type="tel" placeholder="Phone no" formControlName="phone" />
+                <input type="password" placeholder="Password" formControlName="password" />
+                <input type="password" placeholder="Confirm Password" formControlName="confirmPassword"/>
+                <button style="margin-top: 20px;" (click)="signUp()">Sign Up</button>
+                <button style="margin-top: 20px;" routerLink="/login">Login Here</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form  [formGroup]="loginForm">
+                <div class="alert alert-success" role="alert">
+                    Login Successfull!  
+                    <!-- <a href="">Login here</a> -->
+                </div>
+                <h1>Sign in</h1>     
+                <input type="email" placeholder="Email" formControlName="email"/>
+                <input type="password" placeholder="Password" formControlName="password"  />
+                <a href="#">Forgot your password?</a>
+                <button routerLink="/dashboard" (click)="login()">Log In</button>
+            </form>
+        </div>
+
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friends!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp" onclick="loginClick()">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+
+</body>
+
+
+</html>

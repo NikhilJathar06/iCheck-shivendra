@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iCheck</title>
+</head>
+
+<body class="mat-app-background" [ngClass]="{ 'dark-theme-mode': isDarkTheme }">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true"
+      [ngStyle]="{ 'background-color': isDarkTheme ? '#1C1C1E' : 'white' }">
+      <div class="siderbar-content">
+        <aside class="sidebar">
+          <!-- Accordian -->
+          <div class="sidebar-content">
+            <div class="dash">
+              <a routerLink="/companydashboard">
+                <button [ngStyle]="{
+                  'background-color': isDarkTheme ? '#1C1C1E' : 'white',
+                      'border-color': isDarkTheme ? '#848484' : '#E8E8E8'
+                    }">
+                  <h5>
+                    <img src="assets/icons/dashboard-grid.svg" alt="" />
+                    Dashboard
+                  </h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/companyvesselconfig">
+                <button [ngStyle]="{
+                      'background-color': isDarkTheme ? '#1C1C1E' : 'white',
+                      'border-color': isDarkTheme ? '#848484' : '#E8E8E8'
+                    }">
+                  <h5>
+                    <img src="assets/icons/settings.svg" alt="" />
+                    Configuration
+                  </h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/companyoptions">
+                <button [ngStyle]="{
+                  'background-color': isDarkTheme ? '#36A38D' : '#36A38D',
+                  color: isDarkTheme ? 'white' : 'white',
+                  'border-color': isDarkTheme ? '#848484' : '#E8E8E8'
+                    }">
+                  <h5>
+                    <img src="assets/icons/optionlistwhite.svg" alt="" />
+                    Options
+                  </h5>
+                </button></a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content style="display: flex; height: 88vh">
+      <div class="container-fluid">
+        <div class="addCompany">
+          <h1 [ngStyle]="{ color: isDarkTheme ? 'white' : 'black' }">
+            Options
+          </h1>
+          <button [ngStyle]="{
+                'background-color': isDarkTheme ? '#1c1c1e' : 'white'
+              }">
+            <a routerLink="/inspection" [ngStyle]="{ color: isDarkTheme ? 'white' : 'black' }"><img
+                src="assets/icons/task-list.svg" />&nbsp;&nbsp;Manage
+              checklist</a>
+          </button>
+        </div>
+
+
+
+
+        <div style="display: flex;justify-content: space-between;padding-top: 0px;">
+          <div>
+            <div class="mainDiv" *ngFor="let notification of notifications; let i = index">
+              <div class="upload" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                <mat-checkbox [color]="isDarkTheme ? 'primary' : '#fff'" [(ngModel)]="notification.isChecked"
+                  (change)="onMainCheckboxChange(notification, $event.checked)">
+                  <span style="color: #A6A6A6;">{{ notification.label }}</span>
+                </mat-checkbox>
+              </div>
+
+              <div class="subDiv" style="margin-left: 15px" *ngIf="notification.isChecked">
+                <p *ngIf="notification.label !== 'Reminder Duration (In Days)'" [ngStyle]="{'color': isDarkTheme ? 'white' : '#2F3640'}">Notification type</p>
+                <div class="notificationDiv">
+                  <div class="notificationType"
+                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white', 'display': notification.label === 'Reminder Duration (In Days)' ? 'none' : 'block'}">
+                    <mat-checkbox [(ngModel)]="notification.inAppNotifications"
+                      [color]="isDarkTheme ? 'primary' : '#fff'" *ngIf="notification.label !== 'Reminder Duration'">
+                      <span style="color: #A6A6A6;"> In-app Notifications</span>
+                    </mat-checkbox>
+                  </div>
+                  <div class="notificationType"
+                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white', 'display': notification.label === 'Reminder Duration (In Days)' ? 'none' : 'block'}">
+                    <mat-checkbox [(ngModel)]="notification.emailNotifications"
+                      [color]="isDarkTheme ? 'primary' : '#fff'" *ngIf="notification.label !== 'Reminder Duration'">
+                      <span style="color: #A6A6A6;">Email notification</span>
+                    </mat-checkbox>
+                  </div>
+                  <div *ngIf="notification.label === 'Reminder Duration (In Days)'"
+                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}" style="height: 56px;">
+                    <mat-form-field style="width: 437px; max-width: 450px;padding-top: 15px;" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#FAFAFA'}">
+                      <input matInput type="number" placeholder="Reminder Duration"
+                        [(ngModel)]="notification.reminderDuration">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+
+          <form [formGroup]="generatedQuestions">
+            <div>
+              <div class="mainDiv2">
+                <div class="checklistcreate" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                  <div style="padding-left: 15px;">No of question to be generated</div>
+                  <div>
+
+                    <input [ngStyle]="{'color': isDarkTheme ? '#A6A6A6' : 'black'}" style="background-color: transparent;height: 50px;"
+                     formControlName="noOfQuestions" matInput type="number"placeholder="No of questions" >
+                     
+
+                  </div>
+                </div>
+
+
+                <div >
+                  <div class="checklistcreate"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                    <div class="radioButtons" id="radioButtons">
+                      <div>
+                        <input type="radio" [checked]="randomSelected" name="radioOption" id="random" (change)="onOptionChange()">
+                        <label for=""> Random</label>
+                      </div>
+
+                      <div>
+                        <input type="radio" [checked]="manualSelected"  name="radioOption" id="manual" (change)="onOptionChange()">
+                        <label for=""> Manual</label>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <div *ngIf="manualSelected" class="checklistcreate1"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                  <div style="padding-left: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                      <mat-checkbox  [checked]="highChecked" [color]="isDarkTheme ? 'primary' : '#fff'"  (change)="highChecked = !highChecked">
+                        <span style="color: #A6A6A6;"> High</span>
+                      </mat-checkbox>
+
+                      <input [ngStyle]="{'color': isDarkTheme ? '#A6A6A6' : 'black'}" formControlName="highQuestions" (blur)="validateInputs()" class="textbox" matInput type="number" placeholder="No of questions" *ngIf="highChecked">
+
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between;margin-bottom: 10px">
+                      <mat-checkbox [checked]="mediumChecked" [color]="isDarkTheme ? 'primary' : '#fff'"
+                        (change)="mediumChecked = !mediumChecked">
+                        <span style="color: #A6A6A6;"> Medium</span>
+                      </mat-checkbox>
+
+                      <input [ngStyle]="{'color': isDarkTheme ? '#A6A6A6' : 'black'}" formControlName="mediumQuestions" (blur)="validateInputs()" class="textbox" matInput type="number" placeholder="No of questions" *ngIf="mediumChecked">
+
+                    </div>
+
+
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px">
+                      <mat-checkbox [checked]="lowChecked" [color]="isDarkTheme ? 'primary' : '#fff'" (change)="lowChecked = !lowChecked">
+                        <span style="color: #A6A6A6;"> Low</span>
+                      </mat-checkbox>
+
+                      <input [ngStyle]="{'color': isDarkTheme ? '#A6A6A6' : 'black'}" class="textbox" formControlName="lowQuestions" (blur)="validateInputs()"
+                       matInput type="number" placeholder="No of questions" *ngIf="lowChecked">
+
+                    </div>
+
+                  </div>
+                  <div style="text-align: center;">
+                  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+                </div>
+                </div>
+
+
+              </div>
+            </div>
+          </form>
+
+
+
+
+
+        </div>
+
+
+
+
+
+        <div style="width: 600px; display: flex; justify-content: flex-start; padding-bottom: 50px;">
+          <button class="save" (click)="onSubmit()">
+            Save
+          </button>
+        </div>
+
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</body>
+
+</html>

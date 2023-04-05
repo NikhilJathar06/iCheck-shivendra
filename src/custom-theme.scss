@@ -1,0 +1,163 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-icheck: (
+    50 : #e7f4f1,
+    100 : #c3e3dd,
+    200 : #9bd1c6,
+    300 : #72bfaf,
+    400 : #54b19e,
+    500 : #36a38d,
+    600 : #309b85,
+    700 : #29917a,
+    800 : #228870,
+    900 : #16775d,
+    A100 : #aeffe8,
+    A200 : #7bffd9,
+    A400 : #48ffca,
+    A700 : #2fffc3,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-red-palette: (
+  50 : #ffe7e6,
+    100 : #ffc4c1,
+    200 : #ff9d98,
+    300 : #ff766e,
+    400 : #ff584f,
+    500 : #ff3b30,
+    600 : #ff352b,
+    700 : #ff2d24,
+    800 : #ff261e,
+    900 : #ff1913,
+    A100 : #ffffff,
+    A200 : #fffafa,
+    A400 : #ffc8c7,
+    A700 : #ffafad,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-icheckdark: (
+    50 : #fffaed,
+    100 : #fff4d1,
+    200 : #ffecb3,
+    300 : #ffe494,
+    400 : #ffdf7d,
+    500 : #ffd966,
+    600 : #ffd55e,
+    700 : #ffcf53,
+    800 : #ffca49,
+    900 : #ffc038,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #fff5e1,
+    A700 : #ffedc8,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$iCheck-primary: mat.define-palette($md-icheck);
+$iCheck-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$iCheck-warn: mat.define-palette($md-red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$iCheck-theme: mat.define-light-theme((
+  color: (
+    primary: $iCheck-primary,
+    accent: $iCheck-accent,
+    warn: $iCheck-warn,
+  )
+ 
+));
+
+
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($iCheck-theme);
+
+
+
+
+
+//for dark theme 
+
+$iCheck-primary-dark: mat.define-palette($md-icheck);
+$iCheck-accent-dark: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$iCheck-warn-dark: mat.define-palette($md-red-palette);
+
+
+$iCheck-theme-dark: mat.define-dark-theme((
+  color: (
+    primary: $iCheck-primary-dark,
+    accent: $iCheck-accent-dark,
+    warn: $iCheck-warn-dark,
+  )
+ 
+));
+.dark-theme-mode{
+  @include mat.all-component-themes($iCheck-theme-dark);
+}

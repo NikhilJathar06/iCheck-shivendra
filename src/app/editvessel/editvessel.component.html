@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}" >
+    <div class="wrapper" [ngStyle]= "{'background-color': isDarkTheme ? '#303030' : '#f8fafb'}">
+        
+        <div class="container">
+            <div>
+                <h3><a routerLink="/vesselconfig"><span><img src="assets/icons/back.svg"
+                    style="height:22px; width: 22px; margin-bottom: 4px;"></span> Go back</a></h3>
+                <h2 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Edit Vessel</h2>
+            </div>
+
+
+        <form [formGroup]="editVesselForm" novalidate class="form">
+            <div class="company-row">
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 appearance="outline">
+                        <mat-label>Vessel Name</mat-label>
+                        <input matInput placeholder="Vessel name" formControlName="vesselName" [disabled]="true" readonly>
+                        <mat-error class="animated shake" *ngIf="vesselName.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                </div>
+    
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 style="margin:0; padding:0" appearance="outline">
+                        <mat-label>Vessel Code</mat-label>
+                        <input matInput placeholder="#21214" formControlName="vesselCode" >
+                      </mat-form-field>
+
+                </div>
+              </div>
+              <div class="providedDiv">
+                <h5 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}" class="provided"><span><img src="assets/icons/correct.svg" style="height:18px; width: 14px; margin-bottom: 4px;"></span> Provided by the Company</h5>
+            </div>
+            <hr style="border: 1px ; margin-bottom:40px" />
+
+
+            <div class="company-row">
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 appearance="outline">
+                        <mat-label>IMO Number</mat-label>
+                            <input matInput placeholder="#436589" formControlName="vesselImo" >
+                            <mat-error class="animated shake" *ngIf="vesselImo.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                </div>
+    
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 style="margin:0; padding:0" appearance="outline">
+                        <mat-label>Post of registry</mat-label>
+                        <input matInput placeholder="Mumbai" formControlName="vesselPostOfRegistry" >
+                        <mat-error class="animated shake" *ngIf="vesselPostOfRegistry.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+
+                </div>
+              </div>
+              <hr style="border: 1px ; margin-bottom:40px" />
+
+
+              <div class="company-row">
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 appearance="outline">
+                        <mat-label>Call Sign</mat-label>
+                            <input matInput placeholder="Call sign" formControlName="vesselCallSign" >
+                            <mat-error class="animated shake" *ngIf="vesselCallSign.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                </div>
+    
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 style="margin:0; padding:0" appearance="outline">
+                        <mat-label>Gross tonage</mat-label>
+                            <input matInput placeholder="Gross tonage" formControlName="vesselGrossTonage" >
+                            <mat-error class="animated shake" *ngIf="vesselGrossTonage.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+
+                </div>
+              </div>
+              <hr style="border: 1px ; margin-bottom:40px" />
+
+
+              <div class="company-row">
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 appearance="outline">
+                        <mat-label>Summer deadweight</mat-label>
+                            <input matInput placeholder="Summer deadweight" formControlName="vesselSumerDeadweight" >
+                            <mat-error class="animated shake" *ngIf="vesselSumerDeadweight.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                </div>
+    
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 style="margin:0; padding:0" appearance="outline">
+                        <mat-label>Length overall (m)</mat-label>
+                        <input matInput placeholder="Length overall (m)" formControlName="vesselLengthOverall" >
+                        <mat-error class="animated shake" *ngIf="vesselLengthOverall.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+
+                </div>
+              </div>
+              <hr style=" border: 1px ; margin-bottom:40px" />
+
+
+              <div class="company-row">
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 appearance="outline">
+                        <mat-label>Beam (m)</mat-label>
+                            <input matInput placeholder="Beam (m)" formControlName="vesselBeam" >
+                            <mat-error class="animated shake" *ngIf="vesselBeam.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                </div>
+    
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 style="margin:0; padding:0" appearance="outline">
+                        <mat-label>Draught (m)</mat-label>     
+                            <input matInput placeholder="Draught (m)" formControlName="vesselDraught" >
+                            <mat-error class="animated shake" *ngIf="vesselDraught.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+
+                </div>
+              </div>
+              <hr style=" border: 1px;  margin-bottom:40px" />
+
+
+              <div class="company-row">
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 appearance="outline">
+                        <mat-label>Year of built</mat-label>
+                            <input matInput placeholder="Year of built" formControlName="vesselYearOfBuilt" >
+                            <mat-error class="animated shake" *ngIf="vesselYearOfBuilt.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                </div>
+    
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 style="margin:0; padding:0" appearance="outline">
+                        <mat-label>Builder (yard)</mat-label>
+                        <input matInput placeholder="Builder (yard)" formControlName="vesselBuilderYard" >
+                        <mat-error class="animated shake" *ngIf="vesselBuilderYard.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+
+                </div>
+              </div>
+              <hr style="border: 1px;  margin-bottom:40px" />
+
+
+              <div class="company-row">
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 appearance="outline">
+                        <mat-label>Place of build</mat-label>
+                        <input matInput placeholder="Place of build" formControlName="vesselPlaceOfBirth" >
+                        <mat-error class="animated shake" *ngIf="vesselPlaceOfBirth.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                </div>
+    
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 style="margin:0; padding:0" appearance="outline">
+                        <mat-label>Classification society</mat-label>
+                        <input matInput placeholder="Classification society" formControlName="vesselClassificationSociety" >
+                        <mat-error class="animated shake" *ngIf="vesselClassificationSociety.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+
+                </div>
+              </div>
+              <hr style="border: 1px; margin-bottom:40px" />
+
+
+              <div class="company-row">
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 appearance="outline">
+                        <mat-label>Marine superintendent</mat-label>
+                        <input matInput placeholder="Marine superintendent" formControlName="vesselMarineSuperintendent" >
+                        <mat-error class="animated shake" *ngIf="vesselMarineSuperintendent.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                </div>
+    
+                <div class="form-field-input">
+                    <mat-form-field  [style.width.px]=420 style="margin:0; padding:0" appearance="outline">
+                        <mat-label>Technical superintendent</mat-label>
+                            <input matInput placeholder="Technical superintendent" formControlName="vesselTechnicalSuperintendent" >
+                            <mat-error class="animated shake" *ngIf="vesselTechnicalSuperintendent.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+
+                </div>
+              </div>
+              <button class="button" (click)="onVesselEditSubmit()">Submit</button>
+
+        </form>
+
+
+
+
+
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+.card {
+    width: 100%;
+    padding: 10px;
+   
+   
+    border: none;
+    height: 100%;
+    position: relative;
+  }
+  .card p{
+    font-size: 30px;
+    text-align: center;
+    
+    font-weight: 700;
+   
+  }
+  .resend{
+   
+    font-weight: 700;
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+padding-bottom: 15px;
+  }
+  
+ 
+  body {
+    background: #eee;
+  }
+  
+  .mobile-text {
+    color: #989696b8;
+    font-size: 15px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+  
+  .form-control {
+    margin-right: 12px;
+    margin-left: 12px;
+    height:58px;
+    width:58px;
+    background-color:#F6F6F6 ;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size:larger;
+    font-weight: 700;
+
+  }
+  
+  .form-control:focus {
+    color: #495057;
+    background-color:#F6F6F6 ;
+    border-color:#36A38D ;
+    outline: 0;
+    box-shadow: none;
+    text-align: center;
+  }
+  
+  .cursor {
+    cursor: pointer;
+  }
+ 
+  .modal-footer button{
+    margin-top: 20px;
+    margin-bottom: 20px;
+  
+    margin-right: 10px;
+    background-color: #36A38D;
+    padding: 8px 18px;
+    border-radius: 20px;
+  border-style: none;
+  color: #fff;
+  }
+  .otpemail{
+    color:#36A38D
+  }
+  
+  

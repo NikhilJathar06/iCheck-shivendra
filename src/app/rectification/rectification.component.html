@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <title>iCheck</title>
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+    <div class="wrapper" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#f8fafb'}">
+
+        <h3><a routerLink="/notsatisfactorylist"><span><img src="assets/icons/back.svg"
+                        style="height:22px;width:22px; margin-bottom: 4px;"></span> Go back</a></h3>
+
+
+        <div class="container mt-4">
+            <h1 >Rectification</h1>
+            <p [ngStyle]="{'color': isDarkTheme ? '#DDDDDD' : '#2F3640'}">Chapter {{ this.questionNo[0] }} > Section
+                {{this.questionNo[2]}} > Question {{this.questionNo[4]}}</p>
+            <div style="display:flex;">
+                <div style="width:70%">
+                    <h5 style="text-align: justify;" [ngStyle]="{'color': isDarkTheme ? 'white' : '#2F3640'}">Q. {{ questionDescription }}</h5>
+                </div>
+                <div style="width:30%; display:flex; justify-content:flex-end" >
+                    <p style="color: #A6A6A6; font-size:16px">Checked : {{ checkedValue }}</p>
+                </div>
+            </div>
+            <br>
+            <h6 style="font-weight:700" [ngStyle]="{'color': isDarkTheme ? 'white' : '#2F3640'}">Remarks</h6>
+            <p class="paragraph" style="text-align: justify; font-size:14px" [ngStyle]="{'color': isDarkTheme ? '#DDDDDD' : '#828282'}"> {{ remarks }}</p>
+
+            <hr>
+            <form [formGroup]="responseForm" novalidate #form="ngForm">
+                <div>
+
+                    <!-- <label>Findings</label> -->
+                    <!-- <textarea  class=" form-control input" placeholder=""></textarea> -->
+                    <div class="form-field-input">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Findings</mat-label>
+                            <textarea matInput placeholder="Enter your message" formControlName="reasponseFindings"
+                                rows="7"></textarea>
+                            <mat-error class="animated shake" *ngIf="reasponseFindings.invalid">{{getErrorMessage()}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+
+                    <!-- <label>Immediate Corrective Action Taken</label> -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Immediate Corrective Action Taken</mat-label>
+                        <textarea matInput placeholder="Enter your message" formControlName="reasponseActionTaken"
+                            rows="5"></textarea>
+                        <mat-error class="animated shake" *ngIf="reasponseFindings.invalid">{{getErrorMessage()}}
+                        </mat-error>
+                    </mat-form-field>
+
+
+
+                    <!-- <label>Long Term Corrective Actions</label> -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Long Term Corrective Actions</mat-label>
+                        <textarea matInput placeholder="Enter your message" formControlName="reasponseCorrectiveAction"
+                            rows="7"></textarea>
+                        <mat-error class="animated shake" *ngIf="reasponseFindings.invalid">{{getErrorMessage()}}
+                        </mat-error>
+                    </mat-form-field>
+
+
+                    <!-- <label>Root causes</label> -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Root causes</mat-label>
+                        <textarea matInput placeholder="Enter your message" formControlName="reasponseRootCauses"
+                            rows="7"></textarea>
+                        <mat-error class="animated shake" *ngIf="reasponseFindings.invalid">{{getErrorMessage()}}
+                        </mat-error>
+                    </mat-form-field>
+
+
+                    <!-- <label>Preventive Actions</label> -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Preventive Actions</mat-label>
+                        <textarea matInput placeholder="Enter your message" formControlName="reasponsePreventiveAction"
+                            rows="7"></textarea>
+                        <mat-error class="animated shake" *ngIf="reasponseFindings.invalid">{{getErrorMessage()}}
+                        </mat-error>
+                    </mat-form-field>
+
+
+                    <div class="radio">
+                        <label [ngStyle]="{'color': isDarkTheme ? 'white' : '#2F3640'}">Observation status</label>
+                        <label class="status"><input type="radio" formControlName="ObservationValue" (change)="onSelectionChange('Closed')"
+                                [(ngModel)]="selectedOption" name="Closed" value="Closed"
+                                [checked]="selectedOption === 'Closed'">
+                            Closed </label>
+                        <label class="status"><input type="radio" formControlName="ObservationValue" (change)="onSelectionChange('open')"
+                                [(ngModel)]="selectedOption" name="open" value="open" [checked]="selectedOption === 'open'">
+                            Open </label>
+                        <label class="status"> <input type="radio" formControlName="ObservationValue" (change)="onSelectionChange('Progress')"
+                                [(ngModel)]="selectedOption" name="Progress" value="Progress"
+                                [checked]="selectedOption === 'Progress'"> In-progress</label>
+                    </div>
+
+                    <div class="date-picker" style="position: relative; left:-1px;">
+
+
+                        <!-- <label style="margin-right: 70px;" [ngStyle]="{'color': isDarkTheme ? 'white' : '#2F3640'}">Date of completion</label> -->
+
+                        <ng-container *ngIf="selectedOption === 'Closed'" >
+                            <label style="width:230px" [ngStyle]="{'color': isDarkTheme ? 'white' : '#2F3640'}">Date of completion</label>
+                        </ng-container>
+
+                        <ng-container *ngIf="selectedOption === 'open' || selectedOption === 'Progress'">
+                            <label style="width:230px" [ngStyle]="{'color': isDarkTheme ? 'white' : '#2F3640'}">Due date</label>
+                        </ng-container>
+
+                
+
+                        <!-- <mat-form-field style="width: 420px; max-width: 420px;" appearance="outline"  >
+
+                                <mat-label *ngIf="selectedOption === 'Closed'">Date of completion</mat-label>
+    
+                                <mat-label *ngIf="selectedOption === 'open' || selectedOption === 'Progress'">Due date</mat-label>
+
+                                <input matInput [matDatepicker]="dp" formControlname="reasponseDateOfCompletion" 
+                                (dateChange)="updateStartDate($event)" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                                [value]="responseForm.get('reasponseDateOfCompletion')?.value">
+
+                                
+
+                              <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                              <mat-datepicker #dp></mat-datepicker>
+                          </mat-form-field> -->
+                          <input
+                          [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white', 'color': isDarkTheme ? 'white' : 'black', 'color-scheme': isDarkTheme ? 'dark' : 'light'}"
+                          style="width: 420px; height: 56px; max-width: 320px; margin-bottom: 25px;"
+                          formControlName="reasponseDateOfCompletion"
+                          [placeholder]="selectedOption === 'Closed' ? 'Date of completion' : (selectedOption === 'open' || selectedOption === 'Progress') ? 'Due date' : ''"
+                          id="date"
+                          type="text"
+                         
+                          onfocus="(this.type='date')" onblur="(this.type='text')"
+                          />
+                        
+                    </div>
+
+                    
+
+                    <div class="upload">
+                        <input type="file" name="file" id="file" (change)="onFileChanged($event)" multiple>
+                        <label for="file"><span class="textLink" style="color: #2396E3;"><img
+                                    style="height: 18px;width:18px;border:none;outline:none"
+                                    src="assets/icons/attachment.svg">Attachment</span></label>
+                        <p [ngStyle]="{'color': isDarkTheme ? '#DDDDDD' : '#676767'}"
+                            style="padding-left: 15px; padding-top: 20px;"><i>Guidance for the type of Objective
+                                Evidence
+                                required</i></p>
+                    </div>
+                    
+                    <div class="previewDiv">
+                        <!-- matTooltip="click & download" -->
+                        <div *ngFor="let imageUrl of imageUrls; let index = index" class="imgpreview">
+                            <button style="outline:0; border:0;" (click)="downloadImage(imageUrl.url,imageUrl.name)"
+                                class="downloadicon">
+                                <span><img style="height: 20px;width:20px;border:none;outline:none"
+                                        src="assets/icons/downloadicon.svg"></span>
+                            </button>
+                            <img [src]="imageUrl.url" class="previewImage">
+
+                            <div class="previewName"
+                                [ngStyle]="{'background-color': isDarkTheme ? '#1c1c1e' : '#EAEAEA'}">
+                                <p style="font-size:10px;margin-left:5px"><a href=""
+                                        style="color:#2396E3;font-size:13px;"
+                                        title="{{imageUrl.name}}">{{imageUrl.name.slice(0, 10)+"..."}}</a>
+                                    {{imageUrl.size}}</p>
+                            </div>
+
+                            <button (click)="deleteImage(index,imageUrl.name)" class="removeicon">
+                                <span><img style="height: 15px;width:15px;border:none;outline:none"
+                                        src="assets/icons/trash.svg"></span>
+                            </button>
+                        </div>
+                    </div>
+                  
+                    
+                    <div *ngFor="let data of attachmentfileName">
+                        {{data.fileName}}
+                    </div>
+                    <div class="footer"><button class="submit-button" (click)="onSubmit()">Submit</button></div>
+
+
+                    <!-- <mat-file-upload [multiple]="true" (change)="onFileChange($event)" accept="image/*"></mat-file-upload> -->
+                </div>
+            </form>
+
+
+
+
+        </div>
+
+    </div>
+
+    <!-- 
+<form>
+    <div class="upload">
+    <input type="file" name="file" id="file" (change)="onFileChanged($event)">
+    <label for="file"><span class="textLink">Select your file</span></label><br>
+    <img [src]="imageUrl" style="width: 70px; height: 70px;">
+  </div>
+  </form> -->
+
+</body>
+
+</html>

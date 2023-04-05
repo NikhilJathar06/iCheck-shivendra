@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+
+
+
+
+    <div mat-dialog-overlay (click)="closeDialog()"></div>
+    <div class="dialogContainer" style="height: 550px;width:800px">
+        <!-- <div class="modal-header">
+            <h1 class="modal-title" style="color:#36A38D">Edit checklist</h1>
+            <button type="button"  class="close modalclose" data-dismiss="modal"
+            aria-label="Close" (click)="closeDialog()">
+            <img
+                [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+        </button>
+        </div> -->
+        <div class="modal-header" style="height:80px ;"
+        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+        <h1 class="modal-title" style="color:#36A38D">Edit checklist</h1>
+        <button type="button" (click)="closeDialog()" class="close modalclose" data-dismiss="modal"
+            aria-label="Close">
+            <img
+                [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+        </button>
+    </div>
+        <div class="modal-body "  [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+            <div class="checklistbody">
+<form [formGroup]="editChecklistForm" novalidate #form="ngForm">
+    <div class="row">
+        <div class="col-6">
+            
+
+
+            <input
+                [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','color': isDarkTheme ? 'white' : 'black','color-scheme': isDarkTheme ? 'dark' : 'light'}"
+                style="width: 420px;height:56px; max-width: 320px; margin-bottom: 25px;" formControlName="dateOfInspection"  
+                placeholder="  Date of Inspection*" class="textbox-n" type="text"
+                onfocus="(this.type='date')" onblur="(this.type='text')" id="date" />
+
+        </div>
+        <div class="col-6">
+           
+            <mat-form-field style="width: 420px; max-width: 320px; margin-bottom: 25px;"
+                appearance="outline">
+                <mat-label>Place of Inspection</mat-label>
+                <input matInput placeholder="" formControlName="placeOfInspection">
+                <mat-error *ngIf="placeOfInspection.invalid" class="animated shake">
+                    {{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="">
+                           
+        <!-- <div style="display: flex;">
+            <mat-form-field style="width: 420px;max-width: 320px; margin-bottom: 25px;"
+                appearance="outline">
+                <mat-label>Name of Inspector</mat-label>
+                <input matInput placeholder="" #nameOfInspector
+                    formControlName="inspectorName" required>
+                <mat-error *ngIf="nameOfInspector" class="animated shake">
+                    {{getInspectorMessage()}}</mat-error>
+            </mat-form-field>
+            <button type="button" (click)="addtext(nameOfInspector.value)"
+                class="btn-addmore  add-btn"><img src="assets/icons/plus.svg"> </button>
+        </div>
+
+        <div class="addmore" *ngFor="let id of ids; let t = index">
+          
+            <mat-form-field style="width: 420px; max-width: 320px; margin-bottom: 20px;"
+                appearance="outline">
+                <mat-label>Name of Inspector</mat-label>
+                <input matInput placeholder="" [(ngModel)]=id.id #name="ngModel" name="id{{t}}"
+                    required>
+                <mat-error *ngIf="" class="animated shake">
+                    {{getInspectorMessage()}}</mat-error>
+            </mat-form-field>
+            <button class="removeicon" (click)="removetextfield(t)"><span><img
+                        src="assets/icons/trash.svg"></span></button>
+        </div> -->
+        <div formArrayName="inspectornames">
+            <div class="form-field-input"
+                *ngFor="let email of InspectorNameControls; let i = index">
+                <div [style.margin-right]="InspectorNameControls.length === 1 ? '28px' : null">
+                    <div class="input-container" *ngIf="i === 0">
+                        <mat-form-field style="width: 320px;" appearance="outline">
+                            <mat-label>Name of Inspector</mat-label>
+                            <input matInput [formControlName]="i">
+                            <mat-error *ngIf="InspectorNameControls[i].errors?.['required']">
+                                You must enter a value
+                            </mat-error>
+                        </mat-form-field>
+                        <button style="margin-left: 8px;" type="button"
+                            (click)="addInspectorName()" class="btn-addmore add-btn"
+                            [disabled]="!editChecklistForm.get('inspectornames')?.valid">
+                            <img src="assets/icons/plus.svg">
+                        </button>
+                    </div>
+                    <div class="input-container" *ngIf="i !== 0">
+                        <mat-form-field style="width: 320px;" appearance="outline">
+                            <mat-label>Name of Inspector</mat-label>
+                            <input matInput [formControlName]="i">
+                            <mat-error *ngIf="InspectorNameControls[i].errors?.['required']">
+                                You must enter a value
+                            </mat-error>
+                        </mat-form-field>
+                        <button class="removeicon" *ngIf="i > 0"
+                            (click)="deleteInspectorName(i)">
+                            <span><img src="assets/icons/trash.svg"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row" style="padding-top: 20px;">
+        <div class="col-12">
+          
+            <mat-form-field style="width:100%" appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput placeholder="Enter your message"
+                    formControlName="checkListRemark" rows="4">
+                  </textarea>
+                <mat-error *ngIf="checkListRemark.invalid" class="animated shake">
+                    {{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+</form>
+
+            </div>
+
+        </div>
+        <div class="modal-footer"  style="height: 70px;"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                      <div style="margin-right: 20px;">
+                        <button class="createbutton" type="button"  (click)="editChecklistSubmit()">
+                           Save
+                        </button>
+                    </div>
+                    </div>
+
+
+
+    </div>
+</body>
+
+</html>

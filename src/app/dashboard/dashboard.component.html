@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" type="text/css" href="header.css" /> -->
+  <!-- sidebar js -->
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/node_modules/bootstrap5/dist/css/bootstrap.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="https://cdn.ckeditor.com/4.10.1/full/ckeditor.js"></script>
+  <script src="https://cdn.ckeditor.com/4.20.2/standard-all/ckeditor.js"></script>
+
+
+
+
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+  <!-- <button class="sliderToggle" (click)="expanded = !expanded"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> </button> -->
+  <!-- sidebar -->
+  <!-- <div class="main-layout" style="background-color: whitesmoke;"> -->
+  <!-- <button class="sidebar-open btnsidebar" (click)="sidebarShow = !sidebarShow">
+      Open Sidebar
+    </button> -->
+
+
+  <mat-sidenav-container style=" height:700px" class="sidenav-container mat-app-background "
+    [ngClass]="{'dark-theme-mode':isDarkTheme}">
+
+    <mat-sidenav [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}" #sidenav opened="true" mode="side"
+      style="border: none" class="mat-sidenav-content">
+      <div class="siderbar-content ">
+        <aside class="sidebar">
+          <!-- Accordian -->
+          <!-- [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}" -->
+          <div class="sidebar-content mat-app-background"
+            [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+            <div class="sidebar-links">
+              <button class="sliderToggle" style="margin-top:10px">
+                <a (click)="sidenav.close(); sliderToggler(); close() "> <img src="assets/icons/fast-arrow-left.svg"
+                    style="width: 35px; height: 35px;"></a> 
+              </button>
+              <h3><a routerLink="/index" style="cursor: pointer"><span><img src="assets/icons/back.svg"
+                      style="height:22px; margin-bottom: 4px;"></span> Index</a></h3>
+              <div>
+                <!-- <mat-slide-toggle [(ngModel)]="isDarkTheme">
+                      dark theme
+                   </mat-slide-toggle> -->
+
+              </div>
+
+              <h1 [ngStyle]="{'color': isDarkTheme ? '#fff' : '#000000'}">
+                <span>
+                  <img *ngIf="!isDarkTheme" src="assets/icons/home.svg"
+                    style="height:25px; width: 25px; margin-bottom: 8px;">
+                  <img *ngIf="isDarkTheme" src="assets/icons/homedark.svg"
+                    style="height:25px; width: 25px; margin-bottom: 8px;">
+                </span>
+                Sire 2.0
+              </h1>
+            </div>
+
+
+            <!-- TRIAL -->
+            <ul class="nav-links" id="nav-links">
+              <li [ngStyle]="{'color': isDarkTheme ? '#1C1C1E' : 'white'}"
+                *ngFor="let chapter of chapters | unique:'Chapter'" #itemEl routerLinkActive="active"
+                [ngClass]="{'current-chapter': ['routerLinkActive']}">
+                <div *ngIf="chapter.Chapter.length == 0" class="dropdown-title">
+                  <a [routerLink]="[chapter.Chapter]" style="display: flex; align-items:left;">
+                    <span [ngClass]="{'search-icon': true, 'search-icon-clicked': isClicked}"
+                      [innerHTML]="searchImage"></span>
+                    <!-- <span><img src="assets/icons/checkmark.svg" style="height:20px; width: 22px;"></span>&nbsp;&nbsp; -->
+                    <span class="link_name" style="font-weight:600; font-size: 18px;">{{chapter.Chapter}}</span>
+                  </a>
+                </div>
+                <!-- <div class="dropdown-title" (click)="showSubmenu(itemEl, chapter);" > -->
+                <div class="dropdown-title" (click)="showSubmenu(itemEl, chapter)">
+                  <a style="cursor: pointer;">
+                    <div class="img-container">
+
+                      <img [src]="isDarkTheme ? 
+              (chapterStatus[chapter.Chapter] === 'completed' ? 'assets/icons/checkmarkdark.svg' : 
+              chapterStatus[chapter.Chapter] === 'inprogress' ? 'assets/icons/currentchapdark.svg' : 
+    'assets/icons/disabledark.svg') : 
+    (chapterStatus[chapter.Chapter] === 'completed' ? 'assets/icons/checkmark.svg' : 
+    chapterStatus[chapter.Chapter] === 'inprogress' ? 'assets/icons/currentchap.svg' : 
+'assets/icons/disable.svg')" style="height:20px; width: 20px; margin-bottom: 4px;">
+
+                    </div>&nbsp;&nbsp;
+
+                    <span class="link_name" [style.color]="isDarkTheme ? (chapterStatus[chapter.Chapter] === 'completed' ? '#DDDDDD' : 
+                      chapterStatus[chapter.Chapter] === 'inprogress' ? 'white' : '#2f2f32'): (chapterStatus[chapter.Chapter] === 'completed' ? '#676767' : 
+                      chapterStatus[chapter.Chapter] === 'inprogress' ? '#000000' : '#DDDDDD')">Chapter {{
+                      chapter.Chapter }}</span>
+
+                  </a>
+                  <!-- <img [src]="chevron" style="padding-right:1px"> -->
+                  <img [src]="chapter.isOpen ? 'assets/icons/chevron-up.svg' : 'assets/icons/chevron-down.svg'"
+                    style="padding-right:1px;cursor: pointer;">
+
+                  <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu" style="font-weight: 500;">
+                  <li><a class="link_name">{{chapter.Chapter}}</a></li>
+                  <li style="cursor:pointer"
+                    *ngFor="let section of getSectionsForChapter(chapter) | unique:'Section Name'"
+                    (click)="displaySectionData(section); " routerLinkActive="active">
+
+                    <ng-container>
+                      <a
+                        [style.color]="isDarkTheme ?
+                      (sectionStatus[(chapter.Chapter + '.' + section['Section Name'])] === 'completed' ? '#DDDDDD' :
+                      sectionStatus[(chapter.Chapter + '.' + section['Section Name'])] === 'inprogress' ? 'white' : '#2f2f32') :
+                      (sectionStatus[(chapter.Chapter + '.' + section['Section Name'])] === 'completed' ? '#676767' :
+                      sectionStatus[(chapter.Chapter + '.' + section['Section Name'])] === 'inprogress' ? '#000000' : '#DDDDDD')">
+                        Section {{chapter.Chapter}}. {{ section['Section Name'] }}
+                      </a>
+                    </ng-container>
+
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+
+
+
+          </div>
+        </aside>
+
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+
+      <div class="wrapper" style="display:flex;">
+        <div [ngStyle]="{'display' : toggleDivDisplay, 'background-color': isDarkTheme ? '#1C1C1E' : 'white'}"
+          style="background-color: red; height:700px; width:25px;">
+          <button [ngStyle]="{'display' : togglebuttonDisplay}" class="sliderToggle">
+            <a (click)=" sidenav.open(); sliderToggler(); open() "><img src="assets/icons/fast-arrow-right.svg"
+                style="width: 35px; height: 35px;"></a>
+          </button>
+        </div>
+        <div class="container-fluid layout" style="font-size:75px;">
+          <div class="chapterName">
+            <div class="circle-percentage">
+              <circle-progress [percent]="progress" [space]="-4" [radius]="20" [outerStrokeWidth]="4"
+                [innerStrokeWidth]="4" [outerStrokeColor]="'#36A38D'" [innerStrokeColor]="'rgba(54, 163, 141, 0.25)'"
+                [animation]="true" [animationDuration]="1000"></circle-progress>
+            </div>
+
+
+            <div [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}" class="chapter-no"
+              *ngFor="let chapter of chapters | unique:'Chapter' | slice:0:1">
+              <span>
+                <p>Chapter <span style="color: #36A38D;"> {{currentChapter}} </span>/ {{ getNumberOfChapters(chapter) }}
+                </p>
+              </span>
+
+            </div>
+
+            <div class="filter">
+              <!-- <p style="cursor: pointer;">Filter <i class="fa fa-sliders"></i></p> -->
+              <a id="modal-button" (click)="openFilterPopup()">Filter <i><span><img src="assets/icons/filter.svg"
+                      style="padding-right:5px"></span></i></a>
+
+              <!-- <ng-container class="filterChips" *ngFor="let checkbox of selectedCheckboxes">
+                        <div class="chip">{{ checkbox }}</div>
+                      </ng-container> -->
+              <div class="filterChips" *ngIf="showSelectedCheckboxes">
+                <div *ngFor="let checkbox of selectedCheckboxes">
+                  <p class="chip"> {{ checkbox }}</p>
+
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- <img src="assets/image/icons8-slider-16.png" alt="filter"> -->
+          </div>
+
+
+
+
+          <mat-progress-bar [value]="progress" mode="determinate" style="margin-top:10px;">
+          </mat-progress-bar>
+
+          <div *ngFor="let chapter of chapters | unique:'Chapter' | slice:0:1">
+            <div class="under-progressbar" *ngFor="let subitem of chapters | unique:'Section Name' | slice:0:1">
+              <h1 style="padding-top: 20px;">
+                <!-- {{currentQuestion}}: {{name}} -->
+              </h1>
+              <div class="under-progressbar previous">
+                <!-- <p [ngStyle]="{'color': isDarkTheme ? '#DDDDDD' : '#676767'}">Chapter {{currentChapter}} > Section
+                  {{currentSection}} > Question {{currentQuestion}}</p> -->
+                <div style="display: flex ; justify-content:space-evenly; padding-bottom: 20px">
+                  <a matTooltip="Previous Submission" id="modal-button" style="padding-right:20px ;"
+                    (click)="openPreviousPopup()"><img src="assets/icons/Iconmetroprevious.svg"
+                      style="height:18px;width:18px;"></a>
+                  <a id="modal-button"><img src="assets/icons/horizontaldots.svg" style="height:18px;width:18px;"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <hr> -->
+
+          <div class="question-div">
+            <div class="question-2">
+              <div style="display:flex;">
+                <p #questionText>{{currentQuestion}}:</p>&nbsp;&nbsp;
+                <p style="text-align:justify; width:100%" class="questionDescription">{{currentQuestionDescription}}</p>
+                <!-- <button class="editButton" (click)="editQuestion(questionText); openEditContentModal()"> <i><span><img
+                src="assets/icons/pencil.svg"></span></i></button> -->
+
+              </div>
+
+              <div style="width:70%; display:flex; justify-content:flex-end">
+
+
+                <span><img src="assets/icons/chat-lines.svg" style="height:18px;width:18px;">
+                  <a id="modal-button" (click)="openCommunicationPopup()"> Communication log</a>
+                </span>
+              </div>
+            </div>
+            <div style="margin-left: 50px">
+              <p style="font-weight:500; font-size:18px" [ngStyle]="{'color': isDarkTheme ? '#DDDDDD' : '#000'}">Chapter
+                {{currentChapter}} > Section
+                {{currentSection}} > Question {{currentQuestion[4]}}</p>
+
+              <div class="guidance-div">
+                <ol [ngStyle]="{'color': isDarkTheme ? '#DDDDDD' : '#676767'}">
+                  <li>Inspection Guidance <span><a id="modal-button" (click)="openGuidancePopup()">View</a></span></li>
+                  <li>Suggested Inspector Actions <span><a id="modal-button"
+                        (click)="openActionsPopup()">View</a></span>
+                  </li>
+
+                  <li>Expected Evidence <span><a id="modal-button" (click)="openEvidencePopup()">View</a></span></li>
+                  <li>Potential Grounds for a Negative Observation <span><a id="modal-button"
+                        (click)="openObservationPopup()">View</a></span></li>
+                </ol>
+                <button class="editButton" *ngIf="role !== 'vessel'"
+                  (click)="editQuestion(questionText); openEditContentModal()"
+                  [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">Edit This Question</button>
+              </div>
+
+              <form [formGroup]="dashboardForm">
+                <div *ngIf="role === 'vessel'">
+                  <div class="radio-div">
+                    <div style="margin: 0px" class="radio"
+                      [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#233332' : '#E2F1EF'}">
+                      <input type="radio" formControlName="checkedValue" (change)="onSelectionChange('satisfactory')"
+                        [(ngModel)]="selectedOption" id="satisfactory" value="satisfactory"
+                        [checked]="selectedOption === 'satisfactory'">
+                      <label for="satisfactory"> Checked - Satisfactory</label>
+                    </div>
+                    <div class="radio"
+                      [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#233332' : '#E2F1EF'}">
+                      <input type="radio" formControlName="checkedValue"
+                        (change)="onSelectionChange('not-satisfactory')" [(ngModel)]="selectedOption"
+                        id="not-satisfactory" value="not-satisfactory"
+                        [checked]="selectedOption === 'not-satisfactory'">
+                      <label for="not-satisfactory"> Checked - Not-Satisfactory</label>
+                    </div>
+                    <div class="radio"
+                      [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#233332' : '#E2F1EF'}">
+                      <input type="radio" formControlName="checkedValue" (change)="onSelectionChange('not-applicable')"
+                        [(ngModel)]="selectedOption" id="not-applicable" value="not-applicable"
+                        [checked]="selectedOption === 'not-applicable'">
+                      <label for="not-applicable"> Checked - Not-Applicable</label>
+                    </div>
+                    <div class="radio"
+                      [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white' ,'border-color': isDarkTheme ? '#233332' : '#E2F1EF'}">
+                      <input type="radio" formControlName="checkedValue" (change)="onSelectionChange('not-seen')"
+                        [(ngModel)]="selectedOption" id="not-seen" value="not-seen"
+                        [checked]="selectedOption === 'not-seen'">
+                      <label for="not-seen"> Checked - Not-Seen</label>
+                    </div>
+                  </div>
+                  <div class="remarks">
+
+
+                    <mat-form-field style="width:100%" appearance="outline">
+                      <mat-label>Remarks</mat-label>
+                      <input matInput formControlName="remarks" placeholder="Enter your message" rows="4"
+                        [value]="remarks">
+                      <!-- <textarea matInput formControlName="remarks" placeholder="Enter your message" rows="4">remarks</textarea>
+                <textarea>{{remarks}}</textarea> -->
+                    </mat-form-field>
+
+                  </div>
+                  <div class="upload">
+                    <input type="file" [formControl]="attachmentForm" name="attachments" id="file"
+                      (change)="onFileChanged($event)" multiple>
+                    <label for="file">
+                      <!-- <span class="textLink" style="color: #2396E3;"> <img
+                      style="height: 18px;width:18px;border:none;outline:none"
+                      src="assets/icons/attachment.svg">Attachment</span> -->
+                      <span class="textLink" style="color: #2396E3; padding-left: 0px">
+                        <img *ngIf="!isDarkTheme" src="assets/icons/attachment.svg" style="height:18px; width: 18px">
+                        <img *ngIf="isDarkTheme" src="assets/icons/attachmentwhite.svg"
+                          style="height:18px; width: 18px;">Attachment
+                      </span>
+                    </label>
+                    <p [ngStyle]="{'color': isDarkTheme ? '#DDDDDD' : '#676767'}"
+                      style="padding-left: 15px; padding-top: 0px;"><i>Guidance for the type of Objective Evidence
+                        required</i></p>
+                  </div>
+                  <div class="previewDiv">
+
+                    <div *ngFor="let imageUrl of imageUrls; let index = index " class="imgpreview">
+                      <button style="outline:0; border:0;" (click)="downloadImage(imageUrl.url,imageUrl.name)"
+                        class="downloadicon">
+                        <span><img style="height: 20px;width:20px;border:none;outline:none"
+                            src="assets/icons/downloadicon.svg"></span>
+                      </button>
+                      <img [src]="imageUrl.url" class="previewImage">
+                      <div class="previewName" [ngStyle]="{'background-color': isDarkTheme ? '#1c1c1e' : '#EAEAEA'}">
+                        <p style="font-size:10px;margin-left:5px"><a href="" style="color:#2396E3;font-size:13px;"
+                            title="{{imageUrl.name}}">{{imageUrl.name.slice(0, 10)+"..."}}</a>
+                          {{imageUrl.size}}</p>
+                      </div>
+
+                      <button (click)="deleteImage(index, imageUrl.name)" class="removeicon">
+                        <span><img style="height: 15px;width:15px;border:none;outline:none"
+                            src="assets/icons/trash.svg"></span>
+                      </button>
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+  <!-- <div class="footer" > -->
+  <div class="footer-btn-div container-fluid" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+    <button class="back"
+      [ngStyle]="{'background-color': currentQuestion === firstQuestionNO ? (isDarkTheme ? '#1c1c1e' : 'white') : (isDarkTheme ? 'grey' : 'grey'), 'color': currentQuestion === firstQuestionNO ? (isDarkTheme ? '#1c1c1e' : 'white') : (isDarkTheme ? 'white' : 'white')}"
+      (click)="onBack();">Back</button>
+
+    <div class="footer-right">
+      <button style="background-color: #3194A0; margin-right: 10px;" *ngIf="currentQuestion !== lastQuestionNO" class="next" (click)="onNext(); trackProgress()">Next</button>
+      <button  class="submit" (click)="completeChecklist()">Submit</button>
+    </div>
+  </div>
+
+  <!-- </div> -->
+  <!-- </div> -->
+
+
+  <!-- test of sidebar -->
+  <!-- <div *ngFor="let chapter of chapters | unique:'Chapter'">
+    <h2>Chapter {{chapter.Chapter}}</h2>
+    <ul>
+      <li *ngFor="let subitem of chapters | unique:'Section Name'">
+        <ng-container *ngIf="subitem.Chapter == chapter.Chapter">
+          Section {{chapter.Chapter}}.{{ subitem['Section Name'] }}
+        </ng-container>
+      </li>
+    </ul>
+  </div><hr>
+  <div *ngFor="let chapter of chapters | unique:'Chapter'">
+    <h2>Chapter {{chapter.Chapter}}</h2>
+    <ul>
+      <li *ngFor="let subitem of chapters | unique:'Section Name:true' | filter:chapter.Chapter">
+        <ng-container *ngIf="subitem.Chapter == chapter.Chapter">
+          Section {{chapter.Chapter}}.{{ subitem['Section Name'] }}
+        </ng-container>
+      </li>
+      
+    </ul>
+  </div> -->
+
+
+
+
+
+
+
+  <!-- MODALS -->
+
+  <!-- filter -->
+  <div class="modal modal-container filtermodal" tabindex="-1" role="dialog" [ngStyle]="{'display':FilterdisplayStyle}"
+    aria-hidden="true">
+    <!-- By default, height should be set on the component manually -->
+    <ng-scrollbar style="height: 30px">
+
+    </ng-scrollbar>
+    <div class="modal-dialog filterdialog modal-dialog-scrollable  modal-dialog-centered modal-md" role="document">
+      <div class="modal-content filtercontent" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+        <div class="modal-header"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <h1 class="modal-filtertitle" style="color:#36A38D">Filter</h1>
+          <button type="button" (click)="closeFilterPopup()" class="close modalclose" data-dismiss="modal"
+            aria-label="Close">
+            <img
+              [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+          </button>
+        </div>
+        <div class="modal-body filterBody">
+
+          <mat-checkbox [color]="isDarkTheme ? 'primary' : '#fff'"
+            (change)="onCheckboxSelection($event, 'ISM')">ISM</mat-checkbox>
+          <hr>
+          <mat-checkbox [color]="isDarkTheme ? 'primary' : '#fff'"
+            (change)="onCheckboxSelection($event, 'Rank')">Rank</mat-checkbox>
+          <hr>
+          <mat-checkbox [color]="isDarkTheme ? 'primary' : '#fff'"
+            (change)="onCheckboxSelection($event, 'Vessel type')">Vessel type</mat-checkbox>
+          <hr>
+
+          <!-- <mat-checkbox color="blue" (change)="onCheckboxSelection($event, 'ISM')">ISM</mat-checkbox> -->
+          <!-- <mat-checkbox color="blue" (change)="onCheckboxSelection($event, 'Rank')">Rank</mat-checkbox><hr>
+          <mat-checkbox color="blue" (change)="onCheckboxSelection($event, 'Vessel type')">Vessel type</mat-checkbox><hr> -->
+
+          <!-- <mat-checkbox color="blue">ROVIQ sequence </mat-checkbox> -->
+          <mat-accordion>
+
+            <mat-expansion-panel [disabled]="!isChecked" [expanded]="isChecked">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+
+                  <mat-checkbox [color]="isDarkTheme ? 'primary' : '#fff'" style="width:500px ;" [(ngModel)]="isChecked"
+                    #roviq id="roviq" (change)="toggleExpansion()" (change)="onCheckboxSelection($event, 'RQVIQ')">
+                    <label for="roviq">ROVIQ sequence</label>
+                  </mat-checkbox>
+                </mat-panel-title>
+                <mat-panel-description>
+
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="searchbar" [ngStyle]="{'background-color': isDarkTheme ? '#424242' : 'white'}"><img
+                  src="assets/icons/search.svg" alt="">
+
+                <input class="input-field" type="text" placeholder=" Search">
+
+              </div>
+
+              <mat-checkbox color="blue">1.Documentation</mat-checkbox>
+              <hr>
+
+              <mat-checkbox color="blue">2.Pre-board</mat-checkbox>
+              <hr>
+
+              <mat-checkbox color="blue">3.Maindeck</mat-checkbox>
+              <hr>
+
+              <mat-checkbox color="blue">4.Lorem ispum</mat-checkbox>
+
+
+
+            </mat-expansion-panel>
+
+          </mat-accordion>
+
+        </div>
+
+
+        <div
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}"
+          class="modal-footer" style="display: flex; justify-content: flex-end;">
+          <!-- <button type="button" style="background-color: transparent; color: #36A38D; border: 2px solid #36A38D;">
+            + Add Filter
+          </button> -->
+          <button type="button" (click)="applyFilters(); closeFilterPopup();">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}"  -->
+
+  <!-- Guidance -->
+  <div class="modal modal-container " tabindex="-1" role="dialog" [ngStyle]="{'display':GuidancedisplayStyle}"
+    aria-hidden="true">
+    <div class="modal-dialog width-80 modal-dialog-scrollable modal-dialog-centered" role="document">
+      <div class="modal-content popup-content" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+        <div class="modal-header"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <h1 class="modal-title" style="color:#36A38D">Guidance Overview</h1>
+        </div>
+        <div class="modal-body">
+          <div *ngFor="let chapter of chapters | unique:'Chapter' | slice:0:1">
+            <div class="under-progressbar" *ngFor="let subitem of chapters | unique:'Section Name' | slice:0:1">
+
+              <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" [innerHTML]="currentInspectionGuidance">
+                <!-- {{currentInspectionGuidance}} -->
+
+              </p>
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <button type="button" (click)="closeGuidancePopup()">
+            Close
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+
+  <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':ActionsdisplayStyle}"
+    aria-hidden="true">
+    <div class="modal-dialog width-80 modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content popup-content" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+        <div class="modal-header"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <h4 class="modal-title" style="color:#36A38D">Suggested Inspector Actions</h4>
+        </div>
+        <div class="modal-body">
+          <div *ngFor="let chapter of chapters | unique:'Chapter' | slice:0:1">
+            <div class="under-progressbar" *ngFor="let subitem of chapters | unique:'Section Name' | slice:0:1">
+
+              <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" [innerHTML]="currentInspectorActions">
+                <!-- {{currentInspectorActions}} -->
+
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <button type="button" (click)="closeActionsPopup()">
+            Close
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Evidence -->
+
+  <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':EvidencedisplayStyle}"
+    aria-hidden="true">
+    <div class="modal-dialog width-80 modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content popup-content" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+        <div class="modal-header"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <h4 class="modal-title" style="color:#36A38D">Expected Evidence</h4>
+        </div>
+        <div class="modal-body">
+          <div *ngFor="let chapter of chapters | unique:'Chapter' | slice:0:1">
+            <div class="under-progressbar" *ngFor="let subitem of chapters | unique:'Section Name' | slice:0:1">
+
+              <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" [innerHTML]="currentExpectedEvidence">
+                <!-- {{currentExpectedEvidence}} -->
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <button type="button" (click)="closeEvidencePopup()">
+            Close
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':ObservationdisplayStyle}"
+    aria-hidden="true">
+    <div class="modal-dialog width-80 modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content popup-content" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+        <div class="modal-header"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <h4 class="modal-title" style="color:#36A38D">Potential grounds for a Negative Observation</h4>
+        </div>
+        <div class="modal-body">
+          <div *ngFor="let chapter of chapters | unique:'Chapter' | slice:0:1">
+            <div class="under-progressbar" *ngFor="let subitem of chapters | unique:'Section Name' | slice:0:1">
+
+              <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" [innerHTML]="currentNegativeObservation">
+                <!-- {{currentNegativeObservation}} -->
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <button type="button" (click)="closeObservationPopup()">
+            Close
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- communication -->
+  <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':CommunicationdisplayStyle}"
+    aria-hidden="true">
+    <div class="modal-dialog   modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content popup-content" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+        <div class="modal-header"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <div class="modal-Communicationheader" style="width:100%">
+            <div style="display:flex;justify-content:space-between;width:100%">
+              <h1 class="modal-Communicationtitle" style="color:#36A38D"><img src="assets/icons/chat-lines.svg"
+                  style="height:30px ;"> Communication Log</h1>
+              <button type="button" (click)="closeCommunicationPopup()" class="close modalclose" data-dismiss="modal"
+                aria-label="Close">
+                <img
+                  [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+              </button>
+            </div>
+            <h3 [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}"
+              style="color: #686868;font-size: 18px;font-style:bold ;font-weight: 700;padding-top: 5px;">
+              {{currentChapter}}.{{currentSection}}: {{name}}</h3>
+            <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" style="color: #686868;font-size: 15px;">Chapter
+              {{currentChapter}} > Section {{currentSection}} > Question {{currentQuestion
+              }}</p>
+            <!-- <p  [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" style="color: #2F3640;font-size: 15px;font-style:bold;">Q. {{currentQuestionDescription}}</p> -->
+
+          </div>
+
+
+
+        </div>
+        <div class="modal-body chatbody">
+
+          <!-- <div style="display:flex; justify-content: flex-end;">
+            <div class="chat">
+              <div *ngFor="let data of log">
+                <div style="display:flex; justify-content:flex-end">
+                  <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#fff'}">
+                    {{data.chat}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="chatArea" style="height:400px">
+            <ng-container *ngFor="let item of chats | orderBy: 'chatLogs.timestamp' ">
+              <div *ngFor="let chat of item.chats; let i = index">
+                <div class="datetime"
+                  *ngIf="(i === 0) || ((chat.timestamp | date: 'dd MM yyyy') !== (item.chats[i - 1].timestamp | date: 'dd MM yyyy'))"
+                  style="color: #36A38D;text-align: center;">
+                  <h5><span [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#fff'}">{{ chat.timestamp | date:
+                      'dd/MM/yyyy'}}</span></h5>
+                </div>
+                <div class="chat" [ngClass]="{'senderChat': chat.role === 'vessel'}">
+                  <p *ngIf="chat.role === 'vessel'">{{ chat.message }} <span style="font-size: 9px;">{{ chat.timestamp |
+                      date: 'hh:mm a' }}</span></p>
+                  <p *ngIf="chat.role === 'company'"><span style="font-size: 9px;">{{ chat.timestamp | date: 'hh:mm a'
+                      }}</span> {{ chat.message }} </p>
+
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <!-- <div *ngFor="let chatLog   of chats" class="chat senderChat" style="display:flex; justify-content:flex-end">
+                  <div *ngIf="chatLog.role =='vessel'">
+                <p > {{chatLog.message}}</p>
+                <span>{{ chatLog.timestamp | date: 'h:mm a' }}</span>
+              </div>
+                </div> -->
+
+          <div class="chattext">
+            <form [formGroup]="communicationForm">
+              <!-- <input type="text" placeholder="Type Here!"
+           style="height: 60px;width:742px;border-radius:10px;border-color: #CCCCCC;">
+           <button class="sendButton">
+            <img src="assets/icons/sendbutton.svg">
+           </button> -->
+              <mat-form-field style="width:100%;"> <img [src]="imageUrl1" style="width:100px ;">
+
+                <input matInput formControlName="communicationInput">
+                <!-- <input #fileUpload type="file" (change)="importFile($event)" style="display:none"> -->
+                <!-- <button  mat-icon-button matPrefix (click)="fileUpload.click()">
+             <span> <img src="assets/icons/attachment.svg" style="height: 18px;"></span>
+            </button> -->
+                <button mat-icon-button matSuffix (click)="sendChat(name); getCommunicationLogs();">
+                  <img src="assets/icons/sendbutton.svg" style="height: 18px;">
+                </button>
+              </mat-form-field>
+            </form>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Previous -->
+  <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':PreviousdisplayStyle}"
+    aria-hidden="true">
+    <div class="modal-dialog width-80 modal-dialog-scrollable modal-dialog-centered" role="document">
+      <div class="modal-content popup-content" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+
+        <div class="modal-header" style="display:block"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <div class="header-1">
+            <h1 style="color:#36A38D">Previous submission</h1>
+            <button type="button" style="margin-bottom: 35px;" (click)="closePreviousPopup()" class="close modalclose"
+              data-dismiss="modal" aria-label="Close">
+              <img
+                [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+            </button>
+          </div>
+          <div class="header-2">
+            <div class="row">
+              <div style="display:flex; justify-content: space-between; width:30%">
+                <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}">Inspection date: 20/04/2020</p>
+              </div>
+              <div style="display:flex; justify-content: space-between; width:30%">
+                <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}">Review date: 20/04/2020</p>
+              </div>
+            </div>
+            <div class="row">
+              <div style="display:flex; justify-content: space-between; width:30%">
+                <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}">Reviewed by: John Doe</p>
+              </div>
+
+
+              <div style="display:flex; justify-content: space-between; width:30%">
+                <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}">Approval Date: 20/04/2020</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-body modal-body-previous">
+
+
+          <div class="radio-div-previous">
+            <div class="radio">
+              <input type="radio" id="satisfactory" name="satisfactory" value="satisfactory" [disabled]="true"
+                checked />
+              <label for="satisfactory" [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}"> Checked -
+                Satisfactory</label>
+            </div>
+            <div class="radio">
+              <input type="radio" id="not-satisfactory" name="not-satisfactory" value="not-satisfactory" unchecked>
+              <label for="not-satisfactory" [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}"> Checked -
+                Not-Satisfactory</label>
+            </div>
+            <div class="radio">
+              <input type="radio" id="not-applicable" name="not-applicable" value="not-applicable">
+              <label for="not-appplicable" [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}"> Checked -
+                Not-Applicable</label>
+            </div>
+            <div class="radio">
+              <input type="radio" id="not-seen" name="not-seen" value="not-seen">
+              <label for="not-seen" [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}"> Checked - Not-Seen</label>
+            </div>
+          </div>
+
+          <div class="remarks-previous-header"></div>
+          <div class="remarks-previous-content">
+            <mat-form-field style="width:80%" appearance="outline">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput placeholder="Enter your message" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+          <div [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" class="remarks-previous-image"
+            style="padding-top:20px; padding-left:20px"><img src="assets/image/document.png"></div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Edit Content Modal -->
+  <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':EditContentDisplayStyle}"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content edit-content" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+        <!-- <div class="modal-header"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <h4 class="modal-title" style="color:#36A38D">Expected Evidence</h4>
+        </div> -->
+        <div class=" edit-body">
+          <div *ngIf="showEditor" style="display:block">
+
+
+            <mat-accordion>
+
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                style=" max-width:100%;">
+
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Question Description
+                  </mat-panel-title>
+                  <!-- <mat-panel-description>
+                       <span style=" margin-left:320px">   {{ getNumberOfSections(chapter) }} Sections {{ getNumberOfQuestions(chapter) }} questions</span>
+                      </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <ng-container class="vertical">
+                  <ckeditor #questionDescription [config]="{
+                    toolbar: [
+                     [ 'Bold', 'Italic', 'Underline', '-', 'Cut', 'Copy', 'Paste', 'MyCustomButton' ]
+                       ],
+                     extraPlugins: 'myCustomButton'
+                     }" [(ngModel)]="currentQuestionDescription">
+
+                    <!-- <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'"
+                  [label]="'Save Document'" [toolbar]="'clipboard,1'">  
+                </ckbutton>  -->
+                  </ckeditor>
+
+
+                  <!-- <editor  #questionDescription  
+  [(ngModel)]="currentQuestionDescription" [init]="{ branding: false,height: 300,menubar: false,plugins: 'link lists',toolbar: 'bold italic underline | bullist numlist | link' }">
+                   </editor> -->
+
+                  <!-- <editor #questionDescription  
+  [(ngModel)]="currentQuestionDescription"
+  [init]="{
+    selector: 'textarea',
+    skin: 'oxide-dark',
+    content_css: 'oxide',
+    height: 300,
+    menubar: true,
+    plugins: 'link lists',
+    toolbar: 'bold italic underline | bullist numlist | link'
+  }"
+></editor> -->
+
+
+
+
+
+
+
+
+
+                </ng-container>
+
+
+              </mat-expansion-panel><br>
+
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                style=" max-width:100%;">
+
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Inspection Guidance
+                  </mat-panel-title>
+                  <!-- <mat-panel-description>
+                   <span style=" margin-left:320px">   {{ getNumberOfSections(chapter) }} Sections {{ getNumberOfQuestions(chapter) }} questions</span>
+                  </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <ng-container class="vertical">
+                  <ckeditor #Guidance [config]="{
+                  toolbar: [
+                   [ 'Bold', 'Italic', 'Underline', '-', 'Cut', 'Copy', 'Paste', 'MyCustomButton' ]
+                     ],
+                   extraPlugins: 'myCustomButton'
+                   
+                   }" [(ngModel)]="currentInspectionGuidance">
+                  </ckeditor>
+
+
+                </ng-container>
+
+
+              </mat-expansion-panel><br>
+
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                style=" max-width:100%;">
+
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Suggested Inspector Actions
+                  </mat-panel-title>
+                  <!-- <mat-panel-description>
+               <span style=" margin-left:320px">   {{ getNumberOfSections(chapter) }} Sections {{ getNumberOfQuestions(chapter) }} questions</span>
+              </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <ng-container class="vertical">
+                  <ckeditor #Actions [config]="{
+              toolbar: [
+               [ 'Bold', 'Italic', 'Underline', '-', 'Cut', 'Copy', 'Paste', 'MyCustomButton' ]
+                 ],
+               extraPlugins: 'myCustomButton'
+               }" [(ngModel)]="currentInspectorActions">
+                    <!-- <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'"
+  [label]="'Save Document'" [toolbar]="'clipboard,1'">  
+</ckbutton>  -->
+                  </ckeditor>
+                </ng-container>
+              </mat-expansion-panel><br>
+
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                style=" max-width:100%;">
+
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Expected Evidence
+                  </mat-panel-title>
+                  <!-- <mat-panel-description>
+           <span style=" margin-left:320px">   {{ getNumberOfSections(chapter) }} Sections {{ getNumberOfQuestions(chapter) }} questions</span>
+          </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <ng-container class="vertical">
+                  <ckeditor #Evidence [config]="{
+                    toolbar: [
+                     [ 'Bold', 'Italic', 'Underline', '-', 'Cut', 'Copy', 'Paste', 'MyCustomButton' ]
+                       ],
+                     extraPlugins: 'myCustomButton'
+                     }" [(ngModel)]="currentExpectedEvidence">
+                    <!-- <ckbutton [name]="'saveButton'" [command]="'saveCmd'" (click)="save($event)" [icon]="'save.png'"
+          [label]="'Save Document'" [toolbar]="'clipboard,1'">  
+        </ckbutton>  -->
+                  </ckeditor>
+
+
+
+                </ng-container>
+
+
+              </mat-expansion-panel><br>
+
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                style=" max-width:100%;">
+
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Potential Grounds for a Negative Observation
+                  </mat-panel-title>
+                  <!-- <mat-panel-description>
+       <span style=" margin-left:320px">   {{ getNumberOfSections(chapter) }} Sections {{ getNumberOfQuestions(chapter) }} questions</span>
+      </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <ng-container class="vertical">
+                  <ckeditor [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}" #Observation [config]="{
+                             toolbar: [
+                              [ 'Bold', 'Italic', 'Underline', '-', 'Cut', 'Copy', 'Paste', 'MyCustomButton' ]
+                                ],
+                              extraPlugins: 'myCustomButton'
+                              }" [(ngModel)]="currentNegativeObservation">
+                  </ckeditor>
+
+
+                </ng-container>
+
+
+              </mat-expansion-panel><br>
+
+
+
+
+            </mat-accordion>
+          </div>
+
+        </div>
+
+
+        
+        <div class="modal-footer"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <button
+            (click)=" saveChanges(); saveGuidanceChanges(); saveActionsChanges(); saveEvidenceChanges(); saveEditObservationChanges();">Save</button>
+
+          <button type="button" (click)="closeEditContentModal(currentQuestionDescription)">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- remaining questions modal -->
+  <div class="modal modal-containermat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}" tabindex="-1"
+    role="dialog" [ngStyle]="{'display':remainingQuestionsDisplay}" aria-hidden="true">
+    <div class="modal-dialog width-60 modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+       
+        <div class="modal-header" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}" >
+          <h1 class="modal-title" style="color:#FF3B30">
+            Unsubmitted Questions: Please complete all questions before submitting.
+          </h1>
+          <button type="button" style="border-color:transparent ; background-color:transparent"
+            (click)="closeremainingQuestionsModal()" class="close modalclose" data-dismiss="modal" aria-label="Close"
+            [mat-dialog-close]="false">
+            <img [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+          
+          </button>
+        </div>
+        <div class="modal-body randomBody">
+           <div *ngFor="let question of remainingQuestions" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black','border-bottom': isDarkTheme ? '1px solid #595959' : '1px solid #E8E8E8'}"
+            style="display: flex; justify-content: space-between; padding: 5px;" >
+            <!-- <mat-checkbox  [checked]="chapter.selected" (change)="chapter.selected = $event.checked" [color]="isDarkTheme ? 'primary' : '#fff'" (change)="updateSelectedCount($event.checked)"></mat-checkbox> -->
+            <div style="margin-top: 8px; display: flex; ">
+              <p style="margin: 0px;"  [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}"><b>Question {{question.questionNo}}</b></p>&nbsp;&nbsp;
+              <p style="margin: 0px;" [ngStyle]="{'color': isDarkTheme ? 'white' : '#6A6A6A'}">{{question.questionDesc.slice(0,120).concat('.....')}}</p>
+            </div>
+            <p style="margin: 0px; color: #36A38D; cursor: pointer;">Open</p>
+
+          </div> 
+         
+
+        </div>
+        <div class="modal-footer" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}" >
+          <button type="button"  [mat-dialog-close]="false">
+            Generate
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <ngx-spinner type="ball-atom" color="#36a38d" size="medium">
+    <p style="color: white"> Loading........ </p>
+  </ngx-spinner>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

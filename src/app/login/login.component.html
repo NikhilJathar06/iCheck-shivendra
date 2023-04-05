@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iCheck</title>
+
+    <!-- responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- For IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+
+</head>
+
+<body  class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+    <!-- <div class="container" id="container"> 
+        <div class="form-container sign-in-container">
+            <form  [formGroup]="loginForm">
+                <div [ngClass]="className" role="alert">
+                    {{ message }}
+                </div>
+               
+                <h1>Sign in</h1>     
+                <input type="email" placeholder="Email" formControlName="email"/>
+                <input type="password" placeholder="Password" formControlName="password"  />
+                <a href="#">Forgot your password?</a>
+                <button (click)="login()">Log In</button>
+            </form>
+        </div>
+    </div> -->
+    <div *ngIf="isLoading" class="loader-center d-flex justify-content-center align-items-center my-4">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div class="container" *ngIf="!isLoading"  >
+        <section class="vh-100">
+            <div class="container-fluid h-custom">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-md-9 col-lg-6 col-xl-5">
+                        <img *ngIf="isDarkTheme" src="assets/image/ETdark.gif" 
+                            alt="Sample image">
+                            <img *ngIf="!isDarkTheme" src="assets/image/SquareLogo2.gif" 
+                            alt="Sample image">   
+                            <!-- <video height="260" width="260" autoplay><source src="assets/image/Tick.mp4" type="video/mp4"> Your browser does not support the video tag.</video> -->
+
+                    </div>
+                    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                        
+                        <form [formGroup]="loginForm">
+                            <div
+                                class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+
+                            </div>
+
+                            <div class="main" style="padding-bottom: 20px;" [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">
+                                <h5 style="font-size: 16px; font-weight: 500; line-height: 19px; 	font-family: 'Inter';
+                    ">Welcome!</h5>
+                                <h3 style="font-size: 30px; font-weight: 700; line-height: 36px; 	font-family: 'Inter';
+                    ">Login to iCheck</h3>
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <!-- <label class="form-label" for="form3Example3">Email</label>
+                                <div class="d-flex password">
+                                    <input type="email" formControlName="email" id="form3Example3"
+                                        class="form-control-lg input" placeholder="Email" />
+                                </div> -->
+                                <mat-form-field style="width: 419px;" appearance="outline">
+                                    <mat-label>Email</mat-label>
+                                    <input formControlName="email" matInput placeholder="Enter a email">
+                                    <mat-error class="animated shake" *ngIf="email.invalid">{{getEmailErrorMessage()}}
+                                    </mat-error>    
+                                </mat-form-field>
+
+                            </div>
+
+                            <!-- Password input -->
+                            <div class="form-outline mb-3">
+                                <!-- <label class="form-label" for="form3Example4">Password</label> -->
+                                <!-- <div class="d-flex password"> -->
+                                <!-- <input type="password" [type]="password" formControlName="password"
+                                        id="form3Example4" class=" form-control-lg input" placeholder="*****">
+                                    <button (click)="toggleShow()" class="showPasswordbtn">
+                                        <i class="fa fa-eye" aria-hidden="true" *ngIf="!show"></i>
+                                        <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="show"></i>
+                                    </button> -->
+                                <!-- </div> -->
+                                <div class="example-container">
+                                    <mat-form-field style="width: 419px;" appearance="outline">
+                                        <mat-label>Enter your password</mat-label>
+                                        <input formControlName="password" (keyup.enter)="login()" matInput [type]="hide ? 'password' : 'text'"
+                                            placeholder="*******">
+                                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                            <mat-icon ><img
+                                                    [src]="hide ? 'assets/icons/visibility_off.svg' : 'assets/icons/visibility.svg'"  class="custom-icon-size">
+                                            </mat-icon>
+
+                                        </button>
+                                        <mat-error class="animated shake" *ngIf="password.invalid">{{getErrorMessage()}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center"
+                                style="padding-bottom: 25px;">
+                                <!-- Checkbox -->
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input me-2" [checked]="rememberMe" type="checkbox" value="" id="form2Example3" (change)="checkChecked($event);" />
+                                    <label class="form-check-label" for="form2Example3" [ngStyle]= "{'color': isDarkTheme ? '#DDDDDD' : '#4A5568'}">
+                                        Remember me
+                                    </label>
+                                </div>
+                                <a routerLink="/forgotpassword" class="forgot-password"  >Forgot password?</a>
+
+                            </div>
+
+                            <div class="button-login">
+                                <button type="button" (click)="login()"  >Login now</button>
+                             
+                                <!-- <button type="button" (click)="openTestModal()">TEST</button> -->
+                            </div>
+                            <div role="alert" [ngClass]="className">
+                                <p>{{ message }}</p>
+                              <span> <img style="width: 28px;height: 28px;" src="assets/icons/InfoCircle.svg" alt=""> </span>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+
+
+</body>
+
+
+</html>

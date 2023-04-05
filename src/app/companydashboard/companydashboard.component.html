@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iCheck</title>
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+      <div class="siderbar-content">
+        <aside class="sidebar">
+          <!-- Accordian -->
+          <div class="sidebar-content">
+            <div class="dash">
+              <a> <button class="btn1 active"
+                  [ngStyle]="{'background-color': isDarkTheme ? '#36A38D' : '#36A38D','color': isDarkTheme ? 'white' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/dashboard-gridwhite.svg" alt=""> Dashboard</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/companyvesselconfig"> <button
+                  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/settings.svg" alt=""> Configuration</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/companyoptions"> <button
+                  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/optionlistgrey.svg" alt=""> Options</h5>
+                </button></a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content style="display: flex; height: 88vh;" >
+      <div style="height:100%; width: 40px; align-items: center;display: flex;">
+         
+        
+      </div>
+      <div class="container-fluid">
+        <div class="addCompany">
+          <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">{{companyName}}</h1>
+          <button [ngStyle]= "{'background-color': isDarkTheme ? '#1c1c1e' : 'white'}"><a routerLink="/inspection" [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}"><img src="assets/icons/task-list.svg">&nbsp;&nbsp;Manage checklist</a></button>
+        </div>
+        <div class="searchbar">
+          <!-- <i><span>><img src="assets/icons/search.svg"></span></i>
+                  <input class="input-field" type="text" placeholder="Search company name, company code">
+                  <i><span><img src="assets/icons/search.svg"></span></i> -->
+        </div>
+        <div class="chart-wrapper">
+          <div class="insights-row">
+            <div class="insightpanl">
+              <div class="barchart">
+                <h1>Top Question issues</h1>
+                <div style=" padding: 5px; border-radius: 10px;" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                  <canvas baseChart width="300" height="251" type="bar" [data]="barChartData"
+                    [options]="barChartOption"></canvas>
+                </div>
+              </div>
+            </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+            <script
+              src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+            <div class="insightpanl">
+              <div class="Questions">
+                <h1>Questions</h1>
+                <div style=" padding: 5px; border-radius: 10px;" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                  <canvas baseChart width="250" height="251" type="doughnut" [data]="doughnutChartData"
+                    [options]="doughnutChartOption" [plugins]="[ChartDataLabels]"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="insightpanl">
+              <div class="companies">
+                <h1>Ships</h1>
+                <div style=" padding: 5px; border-radius: 10px;" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                  <a href="">View more</a>
+                  <canvas baseChart width="300" height="251" type="bar" [data]="barChartData1"
+                    [options]="barChartOption1"></canvas>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+       
+
+
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</body>
+
+</html>

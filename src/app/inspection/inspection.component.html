@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>iCheck</title>
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+    <div class="wrapper" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#f8fafb'}">
+        <div class="company-container">
+            <div >
+                <h3 *ngIf="role === 'vessel'" style="width: 130px;">
+                    <span style="height:22px; width: 22px; margin-bottom: 4px;"></span>
+                   
+                  </h3>
+                  
+                  <h3 *ngIf="role === 'company'" routerLink="/companydashboard" style="width: 130px;">
+                    <span><img src="assets/icons/back.svg" style="height:22px; width: 22px; margin-bottom: 4px;"></span>
+                    Go back
+                  </h3>
+            </div>
+
+            <div class="donut-chart">
+                <div class="donut-div">
+                    <canvas class="donut" baseChart width="190" height="190" type="doughnut" [datasets]="doughnutChartData.datasets"
+                        [options]="doughnutChartoption" [plugins]="[ChartDataLabels]"></canvas>
+                    <h1 [ngStyle]="{'color': isDarkTheme ? 'white' : '#5E5E5E'}">Sire 2.0</h1>
+                </div>
+            </div>
+            <!-- <div style="padding-top: 30px;">
+                <div class="row">
+                    <table class="inspectionTable">
+                        <thead [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                            <th>
+                               
+                            </th>
+                            <th>
+                                Vessel Name
+                            </th>
+                            <th></th>
+                            <th>
+                                Checklist ID
+                            </th>
+                            <th>
+                                Checklist Name
+                            </th>
+                            <th>
+                                Attachments
+                            </th>
+                            <th style="text-align: center;">
+                                Status
+                            </th>
+                            <th></th>
+                            <th>
+                                Created
+                            </th>
+                            <th>
+                                Last Updated
+                            </th>
+                            <button type="button" (click)="openViewPopup()" class="checklistBtn">+ New
+                                checklist</button>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td >
+                                    <img src="assets/icons/chat-lines.svg" style="height:18px;width:18px;">
+                                </td>
+                                <td >
+                                   
+                                </td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                                    <mat-checkbox color="#fff"></mat-checkbox>
+                                </td>
+                                <td style="padding: 10px;" [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">#2323231</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Checklist name</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}"><a class="view">View</a></td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                                    <div style="display: flex; justify-content: center">
+                                        <div class="progress"
+                                            style="height: 20px; background-color: #fff; border-radius: 100px;">
+                                            <div class="progress-bar" role="progressbar"
+                                                style="width: 25%; height: 20px; background-color: #ffebd8;"
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <span class="progress-label">In-progress</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                                    <img src="assets/icons/openLock.svg" style="margin-left: 5px;">
+                                </td>
+                                <td  [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Nov, 2022</td>
+                                <td  [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Dec, 2022</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+
+                                    <button [cdkMenuTriggerFor]="menu" class="example-standalone-trigger"><img
+                                            src="assets/icons/threeDots.svg"></button>
+                                    <ng-template #menu  >
+                                        <div class="example-menu" cdkMenu >
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Edit</button>
+                                            <button class="example-menu-item" (click)="openRectifyPopup()" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}" >Rectify</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Delete</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Communication log</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Send for review</button>
+                                        </div>
+                                    </ng-template>
+
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    <img src="assets/icons/chat-lines.svg" style="height:18px;width:18px;">
+                                </td>
+                                <td >
+                                    
+                                </td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                                    <mat-checkbox color="#fff"></mat-checkbox>
+                                </td>
+                                <td style="padding: 10px;" [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">#2323231</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Checklist name</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}"><a class="view">View</a></td>
+                                <td style="color: #2B84B2;  font-weight: 500;" [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                                    Submitted
+                                </td>
+                                <td style="padding: 0px; margin:0px" [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                                    <img src="assets/icons/openLock.svg" style="margin-left: 5px;">
+                                </td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Nov, 2022</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Dec, 2022</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+
+                                    <button [cdkMenuTriggerFor]="menu" class="example-standalone-trigger"><img
+                                            src="assets/icons/threeDots.svg"></button>
+                                    <ng-template #menu>
+                                        <div class="example-menu" cdkMenu>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Edit</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Rectify</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Delete</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Communication log</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Send for review</button>
+                                        </div>
+                                    </ng-template>
+
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    <img src="assets/icons/chat-lines.svg" style="height:18px;width:18px;">
+                                </td>
+                                <td >
+                                   
+                                </td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                                    <mat-checkbox color="#fff"></mat-checkbox>
+                                </td>
+                                <td style="padding: 10px;" [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">#2323231</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Checklist name</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}"> <a class="view">View</a></td>
+                                <td style="color: #00A939; font-weight: 500;" [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">Completed</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                                    <img src="assets/icons/closedLock.svg" style="margin-left: 5px;">
+                                </td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Nov, 2022</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Dec, 2022</td>
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+
+                                    <button [cdkMenuTriggerFor]="menu" class="example-standalone-trigger"><img
+                                            src="assets/icons/threeDots.svg"></button>
+                                    <ng-template #menu>
+                                        <div class="example-menu" cdkMenu>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Edit</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Rectify</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Delete</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Communication log</button>
+                                            <button class="example-menu-item" cdkMenuItem [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Send for review</button>
+                                        </div>
+                                    </ng-template>
+
+
+
+                                </td>
+                            </tr>
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div> -->
+
+        </div>
+
+
+        <ngx-spinner type="ball-atom" color="#36a38d" size="medium">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
+
+
+
+        <!-- company table  -->
+
+        <div class="inspectionTable2" *ngIf="role === 'admin' || 'company' && role !== 'vessel' ">
+            <table mat-table [dataSource]="vesselInspectionDataByCompany" style="margin-top:50px" class="demo-table ">
+
+                <ng-container matColumnDef="vesselName">
+
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Vessel Name</th>
+                    <td mat-cell *matCellDef="let element" 
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">{{element.vesselName}}
+                    </td>
+
+                </ng-container>
+
+                <ng-container matColumnDef="checkbox">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                    </th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+
+                        <mat-checkbox [color]="isDarkTheme ? 'primary' : '#fff'" style="padding-left:10px ;">
+                        </mat-checkbox>
+
+
+
+                </ng-container>
+
+                <ng-container matColumnDef="checklistID">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Checklist ID</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">#{{element.checklistId}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="checklistName">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Checklist Name</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">{{checkListName}}</td>
+
+                </ng-container>
+
+                <ng-container matColumnDef="attachments">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Attachments</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                        <a class="view">View</a>
+                    </td>
+
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Status</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                        <div *ngIf="element.progress !== '100'" style="display: flex; justify-content: space-between">
+                            <div class="progress" style="height: 20px; background-color: #fff; border-radius: 100px;">
+                                <div class="progress-bar" role="progressbar" [style.width.%]="element.progress"
+                                    style=" height: 20px; background-color: #ffebd8;" aria-valuenow="100"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                <span class="progress-label">In-progress</span>
+                            </div>
+                            <img *ngIf="!isDarkTheme" src="assets/icons/openLock.svg" style="margin-left: 5px;">
+                            <img *ngIf="isDarkTheme" src="assets/icons/openLockdark.svg" style="margin-left: 5px;">
+                        </div>
+                        <div style=" display: flex; align-items: center; justify-content: space-between"
+                            *ngIf="element.progress === '100'">
+                            <p style="margin-top: 17px; color: #2B84B2; font-weight: 500;">Submitted</p>
+                            <img *ngIf="!isDarkTheme" src="assets/icons/openLock.svg" style="margin-left: 5px;">
+                            <img *ngIf="isDarkTheme" src="assets/icons/openLockdark.svg" style="margin-left: 5px;">
+                        </div>
+
+
+
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="created">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Created</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}"> {{element.createdAt |
+                            date:'MMM dd, y'}}</td>
+
+                </ng-container>
+
+                <ng-container matColumnDef="lastUpdated">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Last Updated</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">{{element.updated_at |
+                            date:'MMM dd, y'}}</td>
+
+                </ng-container>
+
+                <ng-container matColumnDef="newChecklist">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB','color': isDarkTheme ? 'white' : 'black','border-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                        <button type="button" (click)="openViewPopup()" class="checklistBtn">+ New
+                            checklist</button>
+                    </th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                        <button [cdkMenuTriggerFor]="menu" class="example-standalone-trigger"><img
+                                src="assets/icons/threeDots.svg"></button>
+                        <ng-template #menu>
+                            <div class="example-menu" cdkMenu>
+                                <button class="example-menu-item" cdkMenuItem   (click)="openEditModal(element.checklistId);"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Edit</button>
+                                <!-- <button class="example-menu-item" cdkMenuItem (click)="openRectifyPopup(element.checklistId)"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Rectify</button> -->
+                                <button class="example-menu-item" cdkMenuItem  (click)="deleteCheckList(element.checklistId);"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Delete</button>
+                                <button class="example-menu-item" (click)="openCommunicationPopup(element.vesselName, element.checklistId)"
+                                    cdkMenuItem
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Communication
+                                    log</button>
+                                <!-- <button class="example-menu-item" cdkMenuItem
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Send
+                                    for review</button> -->
+                            </div>
+                        </ng-template>
+                    </td>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+            </table>
+        </div>
+
+
+        <!-- vessel role table -->
+       
+        <div class="inspectionTable" *ngIf="role === 'vessel'">
+            <table mat-table [dataSource]="vesselInspectionData" style="margin-top:50px" class="demo-table">
+                <ng-container matColumnDef="demo-checkbox">
+
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                    </th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                        <mat-checkbox [color]="isDarkTheme ? 'primary' : '#fff'" style="padding-left:10px ;">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="demo-checklistId">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Checklist ID</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">#{{element.checklistId}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-checklistName">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Checklist Name</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">{{checkListName}}
+                        <span style="cursor:pointer" (click)="sendChecklistID(element.checklistId)" routerLink="/dashboard"><img
+                                src="assets/icons/checkList.svg"></span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-attachments">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Attachments</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                        <a class="view">View</a>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-status">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Status</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                        <div *ngIf="element.progress !== '100'" style="display: flex; justify-content: space-between">
+                            <div class="progress" style="height: 20px; background-color: #fff; border-radius: 100px;">
+                                <div class="progress-bar" role="progressbar" [style.width.%]="element.progress"
+                                    style=" height: 20px; background-color: #ffebd8;" aria-valuenow="100"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                <span class="progress-label">In-progress</span>
+                            </div>
+                            <img *ngIf="!isDarkTheme" src="assets/icons/openLock.svg" style="margin-left: 5px;">
+                            <img *ngIf="isDarkTheme" src="assets/icons/openLockdark.svg" style="margin-left: 5px;">
+                        </div>
+                        <div style=" display: flex; align-items: center; justify-content: space-between"
+                            *ngIf="element.progress === '100'">
+                            <p style="margin-top: 17px; color: #2B84B2; font-weight: 500;">Submitted</p>
+                            <img *ngIf="!isDarkTheme" src="assets/icons/openLock.svg" style="margin-left: 5px;">
+                            <img *ngIf="isDarkTheme" src="assets/icons/openLockdark.svg" style="margin-left: 5px;">
+                        </div>
+
+
+
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-created">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Created</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">{{element.createdAt |
+                        date:'MMM dd, y'}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-lastUpdated">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+                        Last Updated</th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">{{element.updated_at |
+                        date:'MMM dd, y'}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-newChecklist">
+                    <th mat-header-cell *matHeaderCellDef
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB','color': isDarkTheme ? 'white' : 'black','border-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                        <button type="button" (click)="openViewPopup()" class="checklistBtn">+ New
+                            checklist</button>
+                    </th>
+                    <td mat-cell *matCellDef="let element"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                        <button [cdkMenuTriggerFor]="menu" class="example-standalone-trigger"><img
+                                src="assets/icons/threeDots.svg"></button>
+                        <ng-template #menu>
+                            <div class="example-menu" cdkMenu>
+                                <button class="example-menu-item" cdkMenuItem
+                                    (click)="openEditModal(element.checklistId);"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Edit</button>
+                                <button class="example-menu-item" (click)="openRectifyPopup(element.checklistId)" cdkMenuItem [disabled]="element.progress < 100"   [ngClass]="{'disabled-menu': element.progress < 100}"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Rectify</button>
+                                <button class="example-menu-item" cdkMenuItem [disabled]="element.progress < 100"   [ngClass]="{'disabled-menu': element.progress < 100}"
+                                    (click)="deleteCheckList(element.checklistId);"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Delete</button>
+                                <button class="example-menu-item" cdkMenuItem
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Communication
+                                    log</button>
+                                <button class="example-menu-item" cdkMenuItem [disabled]="element.progress === 100 || element.progress < 100"   [ngClass]="{'disabled-menu': element.progress === 100 || element.progress < 100}"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','color': isDarkTheme ? 'white' : 'black'}">Send
+                                    for review</button>
+                            </div>
+                        </ng-template>
+                    </td>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsVessel"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsVessel;"></tr>
+            </table>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <!-- MODAL -->
+
+    <!--Communications Sections  -->
+    <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':CommunicationdisplayStyle}"
+        aria-hidden="true">
+        <div class="modal-dialog comm-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body comm-body" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#F8FAFB'}">
+                    <div class="container-fluid">
+                        <div class="communicationsHeader">
+                            <h1 style=" color: #36A38D">Communications</h1>
+                            <div class="commHeaderRight">
+                                <!-- <div style="margin-right:40px; display:flex; justify-content: space-between;     align-items: center; ">
+                                    <img style="height:14px; width:14px; margin-right:10px;" src="assets/icons/add.svg">
+                                    <p>Create New</p>
+                                </div> -->
+                                <button type="button" (click)="closeCommunicationPopup()" class="close modalclose"
+                                    data-dismiss="modal" aria-label="Close">
+                                    <img
+                                        [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+                                </button>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <p class="newMessage" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">New Message</p>
+                        <div class="sectionDiv" *ngFor="let chatLog of unReadQuestions| unique:'questionNo'"
+                            [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                            <a>Question {{chatLog.questionNo}}</a>
+                            <a class="open" (click)="openChatsPopup(vesselName, chatLog.questionNo)">Open</a>
+                        </div>
+
+                        <!-- <div class="sectionDiv">
+                    <a>Section 2.1</a>
+                    <a class="open">Open</a>
+                </div>
+
+                <div class="sectionDiv">
+                    <a>Section 2.1</a>
+                    <a class="open">Open</a>
+                </div> -->
+
+                        <br>
+                        <p class="newMessage" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">Previous
+                            communication</p>
+
+                        <div class="sectionDiv" *ngFor="let chatLog of ReadQuestions | unique:'questionNo'"
+                            [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                            <a>Question {{chatLog.questionNo}}</a>
+                            <a class="open" (click)="openChatsPopup(vesselName, chatLog.questionNo)">Open</a>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CHATS MODEL -->
+    <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':ChatsdisplayStyle}"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content popup-content"
+                [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+                <div class="modal-header"
+                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                    <div class="modal-Communicationheader" style="width:100%">
+                        <div style="display:flex;justify-content:space-between;width:100%">
+                            <h1 class="modal-Communicationtitle" style="color:#36A38D"><img
+                                    src="assets/icons/chat-lines.svg" style="height:30px ;"> Communication Log</h1>
+                            <button type="button" (click)="closeChatsPopup(vesselName)" class="close modalclose"
+                                data-dismiss="modal" aria-label="Close">
+                                <img
+                                    [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+                            </button>
+                        </div>
+                        <h3 [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}"
+                            style="color: #686868;font-size: 18px;font-style:bold ;font-weight: 700;padding-top: 5px;">
+                            {{vesselName}}</h3>
+                        <!-- <p *ngFor="let chatLog of chats| unique:'questionNo'"
+                            [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}"
+                            style="color: #686868;font-size: 15px;">Chapter {{chatLog['Question No'][0]}} > Section
+                            {{chatLog['Question No'][2]}} > Question {{chatLog['Question No'][4]}}</p> -->
+
+                        <!-- <p  [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" style="color: #2F3640;font-size: 15px;font-style:bold;">Q. {{currentQuestionDescription}}</p> -->
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-body chatbody">
+                    <div class="chatArea" style="height:400px">
+                        <ng-container *ngFor="let item of chats | orderBy: 'chatLogs.timestamp' ">
+                            <div *ngFor="let chat of item.chats; let i = index">
+                                <div class="datetime"
+                                    *ngIf="(i === 0) || ((chat.timestamp | date: 'dd MM yyyy') !== (item.chats[i - 1].timestamp | date: 'dd MM yyyy'))"
+                                    style="color: #36A38D;text-align: center;">
+                                    <h5><span [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#fff'}">{{
+                                            chat.timestamp | date: 'dd/MM/yyyy'}}</span></h5>
+                                </div>
+                                <div class="chat" [ngClass]="{'senderChat': chat.role === 'company'}">
+                                    <p *ngIf="chat.role === 'company'"><span style="font-size: 9px;">{{ chat.timestamp |
+                                            date: 'hh:mm a' }}</span> {{ chat.message }} </p>
+                                    <p *ngIf="chat.role === 'vessel'">{{ chat.message }} <span
+                                            style="font-size: 9px;">{{ chat.timestamp | date: 'hh:mm a' }}</span></p>
+
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="chattext">
+                        <form [formGroup]="communicationForm">
+                            <!-- <input type="text" placeholder="Type Here!"
+       style="height: 60px;width:742px;border-radius:10px;border-color: #CCCCCC;">
+       <button class="sendButton">
+        <img src="assets/icons/sendbutton.svg">
+       </button> -->
+                            <mat-form-field *ngFor="let e of chatLog | unique:'questionNo'" style="width:100%;">
+
+                                <input matInput formControlName="communicationInput">
+                                <!-- <input #fileUpload type="file" (change)="importFile($event)" style="display:none"> -->
+                                <!-- <button  mat-icon-button matPrefix (click)="fileUpload.click()">
+         <span> <img src="assets/icons/attachment.svg" style="height: 18px;"></span>
+        </button> -->
+                                <button mat-icon-button matSuffix
+                                    (click)="sendChat(e['Question No'], vesselName); getChats(vesselName, e['Question No'])">
+                                    <img src="assets/icons/sendbutton.svg" style="height: 18px;">
+                                </button>
+                            </mat-form-field>
+                        </form>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- create checklist modal -->
+    <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':ViewdisplayStyle}"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+                <div class="modal-header"
+                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                    <h1 class="modal-title" style="color:#36A38D">Create checklist</h1>
+                    <button type="button" (click)="closeViewPopup()" class="close modalclose" data-dismiss="modal"
+                        aria-label="Close">
+                        <img
+                            [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <div class="checklistbody">
+                        <form [formGroup]="createChecklist" novalidate #form="ngForm">
+                            <div class="row">
+                                <div class="col-6">
+                                    <!-- <label>Date of Inspection</label>
+                                    <input type="date" class="form-control input" placeholder=""> -->
+
+
+                                    <input
+                                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','color': isDarkTheme ? 'white' : 'black','color-scheme': isDarkTheme ? 'dark' : 'light'}"
+                                        style="width: 420px;height:56px; max-width: 320px; margin-bottom: 25px;"
+                                        formControlName="dateOfInspection" placeholder="  Date of Inspection*"
+                                        class="textbox-n" type="text" onfocus="(this.type='date')"
+                                        onblur="(this.type='text')" id="date" />
+
+                                </div>
+                                <div class="col-6">
+                                    <!-- <label>Place of Inspection</label>
+                                    <input type="text" class="form-control input" placeholder=""> -->
+                                    <mat-form-field style="width: 420px; max-width: 320px; margin-bottom: 25px;"
+                                        appearance="outline">
+                                        <mat-label>Place of Inspection</mat-label>
+                                        <input matInput placeholder="" formControlName="placeOfInspection">
+                                        <mat-error *ngIf="placeOfInspection.invalid" class="animated shake">
+                                            {{getErrorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="">
+                                <!-- <div class="  col-7"> -->
+                                <!-- <div style="display: flex;" formArrayName="picemails">
+                                    <mat-form-field style="width: 420px;max-width: 320px; margin-bottom: 25px;"
+                                        appearance="outline">
+                                        <mat-label>Name of Inspector</mat-label>
+                                        <input matInput placeholder="" #nameOfInspector
+                                            formControlName="inspectorName" required>
+                                        <mat-error *ngIf="nameOfInspector" class="animated shake">
+                                            {{getInspectorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                    <button type="button" (click)="addtext(nameOfInspector.value)"
+                                        class="btn-addmore  add-btn"><img src="assets/icons/plus.svg"> </button>
+                                </div> -->
+
+
+                                <div formArrayName="inspectornames">
+                                    <div class="form-field-input"
+                                        *ngFor="let email of InspectorNameControls; let i = index">
+                                        <div [style.margin-right]="InspectorNameControls.length === 1 ? '28px' : null">
+                                            <div class="input-container" *ngIf="i === 0">
+                                                <mat-form-field style="width: 320px;" appearance="outline">
+                                                    <mat-label>Name of Inspector</mat-label>
+                                                    <input matInput [formControlName]="i">
+                                                    <mat-error *ngIf="InspectorNameControls[i].errors?.['required']">
+                                                        You must enter a value
+                                                    </mat-error>
+                                                </mat-form-field>
+                                                <button style="margin-left: 8px;" type="button"
+                                                    (click)="addInspectorName()" class="btn-addmore add-btn"
+                                                    [disabled]="!createChecklist.get('inspectornames')?.valid">
+                                                    <img src="assets/icons/plus.svg">
+                                                </button>
+                                            </div>
+                                            <div class="input-container" *ngIf="i !== 0">
+                                                <mat-form-field style="width: 320px;" appearance="outline">
+                                                    <mat-label>Name of Inspector</mat-label>
+                                                    <input matInput [formControlName]="i">
+                                                    <mat-error *ngIf="InspectorNameControls[i].errors?.['required']">
+                                                        You must enter a value
+                                                    </mat-error>
+                                                </mat-form-field>
+                                                <button class="removeicon" *ngIf="i > 0"
+                                                    (click)="deleteInspectorName(i)">
+                                                    <span><img src="assets/icons/trash.svg"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <!-- <div class="addmore" *ngFor="let id of ids; let t = index">
+                                    
+                                    <mat-form-field style="width: 420px; max-width: 320px; margin-bottom: 20px;"
+                                        appearance="outline">
+                                        <mat-label>Name of Inspector</mat-label>
+                                        <input matInput placeholder="" [(ngModel)]=id.id #name="ngModel" name="id{{t}}"
+                                            required>
+                                        <mat-error *ngIf="" class="animated shake">
+                                            {{getInspectorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                    <button class="removeicon" (click)="removetextfield(t)"><span><img
+                                                src="assets/icons/trash.svg"></span></button>
+                                </div> -->
+                            </div>
+
+                            <div class="row" style="padding-top: 15px;">
+                                <div class="col-12">
+                                    <!-- <label>Remarks</label>
+                                    <textarea class="form-control textarea" placeholder=""></textarea> -->
+                                    <mat-form-field style="width:100%" appearance="outline">
+                                        <mat-label>Remarks</mat-label>
+                                        <textarea matInput placeholder="Enter your message"
+                                            formControlName="checkListRemark" rows="4">
+                                          </textarea>
+                                        <mat-error *ngIf="checkListRemark.invalid" class="animated shake">
+                                            {{getErrorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                        <!-- <button class="backbutton" type="button" (click)="closeViewPopup()">
+                            Back
+                        </button> -->
+                        <button class="createbutton" type="button" (click)="newChecklistSubmit()"
+                            (click)="closeViewPopup()">
+                            Create
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- EDIT checklist modal -->
+    <!-- <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':EditCheckListDisplay}"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+                <div class="modal-header"
+                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                    <h1 class="modal-title" style="color:#36A38D">Edit checklist</h1>
+                    <button type="button" (click)="closeEditCheckList()" class="close modalclose" data-dismiss="modal"
+                        aria-label="Close">
+                        <img
+                            [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <div class="checklistbody">
+                        <form [formGroup]="editChecklistForm" novalidate #form="ngForm">
+                            <div class="row">
+                                <div class="col-6">
+                                    
+
+
+                                    <input
+                                        [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','color': isDarkTheme ? 'white' : 'black','color-scheme': isDarkTheme ? 'dark' : 'light'}"
+                                        style="width: 420px;height:56px; max-width: 320px; margin-bottom: 25px;" formControlName="dateOfInspection"  
+                                        placeholder="  Date of Inspection*" class="textbox-n" type="text"
+                                        onfocus="(this.type='date')" onblur="(this.type='text')" id="date" />
+
+                                </div>
+                                <div class="col-6">
+                                   
+                                    <mat-form-field style="width: 420px; max-width: 320px; margin-bottom: 25px;"
+                                        appearance="outline">
+                                        <mat-label>Place of Inspection</mat-label>
+                                        <input matInput placeholder="" formControlName="placeOfInspection">
+                                        <mat-error *ngIf="placeOfInspection.invalid" class="animated shake">
+                                            {{getErrorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="">
+                           
+                                <div style="display: flex;">
+                                    <mat-form-field style="width: 420px;max-width: 320px; margin-bottom: 25px;"
+                                        appearance="outline">
+                                        <mat-label>Name of Inspector</mat-label>
+                                        <input matInput placeholder="" #nameOfInspector
+                                            formControlName="inspectorName" required>
+                                        <mat-error *ngIf="nameOfInspector" class="animated shake">
+                                            {{getInspectorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                    <button type="button" (click)="addtext(nameOfInspector.value)"
+                                        class="btn-addmore  add-btn"><img src="assets/icons/plus.svg"> </button>
+                                </div>
+
+                                <div class="addmore" *ngFor="let id of ids; let t = index">
+                                  
+                                    <mat-form-field style="width: 420px; max-width: 320px; margin-bottom: 20px;"
+                                        appearance="outline">
+                                        <mat-label>Name of Inspector</mat-label>
+                                        <input matInput placeholder="" [(ngModel)]=id.id #name="ngModel" name="id{{t}}"
+                                            required>
+                                        <mat-error *ngIf="" class="animated shake">
+                                            {{getInspectorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                    <button class="removeicon" (click)="removetextfield(t)"><span><img
+                                                src="assets/icons/trash.svg"></span></button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                  
+                                    <mat-form-field style="width:100%" appearance="outline">
+                                        <mat-label>Remarks</mat-label>
+                                        <textarea matInput placeholder="Enter your message"
+                                            formControlName="checkListRemark" rows="4">
+                                          </textarea>
+                                        <mat-error *ngIf="checkListRemark.invalid" class="animated shake">
+                                            {{getErrorMessage()}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer"
+                        [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+                      
+                        <button class="createbutton" type="button" (click)="submitEditCheckList()">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+
+
+
+    <!-- Rectify modal -->
+    <div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':RectifydisplayStyle}"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-md" role="document">
+            <div class="rectify-modal-content modal-content"
+                [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+
+                <div style="margin:10px 10px;display:flex;justify-content: flex-end;">
+                    <button type="button" (click)="closeRectifyPopup()" class="close modalclose" data-dismiss="modal"
+                        aria-label="Close" style="border:none;background-color:transparent">
+                        <img
+                            [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+                    </button>
+                </div>
+
+
+                <div class="dialogContent" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">
+                    Would you like to use iCheck template or upload your custom report?
+                </div>
+                <div mat-dialog-actions class="action" [align]="'center'" style="display:flex;justify-content: center;">
+                    <button class="icheckbutton" routerLink="/notsatisfactorylist">Use iCheck</button>
+                    <button class="uploadbutton"> <input type="file" name="file" id="file" style="display: none;"
+                            accept=".pdf, .doc, .docx">
+
+                        <label for="file"><span class="textLink">Upload <img src="assets/icons/uploadblack.svg" alt="">
+                            </span></label>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+
+</html>

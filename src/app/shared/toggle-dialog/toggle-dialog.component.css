@@ -1,0 +1,143 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dialogContainer{
+    width: 100%;
+    height: 150px;
+  
+
+}
+.dialogTitle{
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+}
+
+.dialogContent{ 
+    font-family: 'Inter';
+    display: flex;
+    align-items: center;
+    text-align: center;
+   
+    font-weight: 600;
+    font-size: 17px;
+    line-break: 5px;
+    line-height: 19px;
+
+}
+
+.action button{
+    gap: 10px;
+    height: 40px;
+    width: 87px;
+    background: #36A38D;
+    border-radius: 35px;
+    outline: none;
+    border: none;
+    color: #fff;
+    margin: 5px;
+}
+
+.action .no{
+    border: 1px solid #e8e8e8;
+    color: #000;
+    background-color: #fff;
+}
+
+
+.modal-footer button{
+    background-color: #36A38D;
+    padding: 5px 18px;
+    border-radius: 20px;
+  border-style: none;
+  color: #fff;
+  }
+
+
+  
+
+  
+  .modal-body h1{
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+  }
+  
+  .modal-body p{
+    color: #737373;
+    
+  }
+  .randomBody{
+    padding-top: 0px;
+  }
+  .modal-title{
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 36px;
+    /* padding-left: 40px; */
+    padding-top: 20px;
+    color: #4D4D4D;
+  }
+  
+.modal-content{
+    height: 70%;
+    border-radius: 0px !important;
+  }
+  
+  .modal-container{
+    background-color: rgba(0,0,0,0.75);
+
+   /* opacity: 0; */
+  }
+  
+  .modal{
+    background-color: rgba(0,0,0,0.75);
+    
+    right: 20px;
+  
+  }
+  
+  .modal-container:target{
+    opacity: 1;
+  }
+  
+  .filter{
+    padding-top:10px ;
+    display: flex;
+    justify-content: space-between;
+    color: #36A38D;
+    position: sticky;
+  top: 0;
+  background-color: #FFFFFF; /* or any other background color you want */
+  z-index: 1;
+  }
+
+  .filterBody{
+    padding-left: 5px;
+  }
+
+  .modal-filtertitle{
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+    color: #4D4D4D;
+  
+  }
+  .filtercontent{
+   height:45%;
+   width:100%;
+  }
+  .filtercontent{
+   border-radius: 0px !important;
+  }
+
+
+
+

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+
+    <div mat-dialog-overlay (click)="closeDialog()"></div>
+    <div class="dialogContainer">
+        <div class="heading">
+            <h3 (click)="closeDialog()"><span><img src="assets/icons/back.svg"
+                        style="height:22px; width: 22px; margin-bottom: 4px;"></span> Go
+                back</h3>
+            <h2>Request payment</h2>
+            
+        </div>
+        <div class="subscription-deatils">
+            <div class="row">
+                <div class="col">
+                    <label>Company name</label>
+                    <P>{{ data.message }}</P>
+                </div>
+                <div class="col">
+                    <label>Subscription end</label>
+                    <p>31.01.2023</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>Email</label>
+                    <P>Someone@intugine.com <span><img style="margin-left: 5px;" src="assets/icons/pencil.svg"></span><span><img style="margin-left: 5px;" src="assets/icons/plus.svg"></span><br>
+                        Someone2@intugine.co.<span><img style="margin-left: 5px;" src="assets/icons/trash.svg"></span>
+                    </P>
+                </div>
+                <div class="col">
+                    <label>Previous price </label>
+                    <p>₹ 34,000  <a> View More</a> </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>Subscription Rate</label>
+                    <div class="currancy-selector">
+                    <div class="input-group input-group-sm mb-3">
+
+                        <select class="input-group-text" name="Currancy" >
+
+                            <option value="volvo">&#8377;</option>
+
+                            <option value="saab">&#8377;</option>
+
+                            <option value="opel">&#8371;</option>
+
+                            <option value="audi">&#8364;</option>
+                            <span class="input-group-text">
+                           </span>
+                            </select>
+                        <input type="text" class=" input">
+                    </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- <div mat-dialog-content class="dialogContent">{{data.message}}</div> -->
+        <div mat-dialog-actions class="action" [align]="'start'">
+
+            <button mar-raised-button class="payment" [mat-dialog-close]="true">Send payment request</button>
+            <!-- <button mar-raised-button color="#36A38D" class="cancel no" [mat-dialog-close]="false">{{data.btn2value}}</button> -->
+        </div>
+    </div>
+</body>
+
+</html>

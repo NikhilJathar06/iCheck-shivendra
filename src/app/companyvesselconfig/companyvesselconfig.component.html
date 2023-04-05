@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iCheck</title>
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav mode="side" opened="true"
+            [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+            <div class="siderbar-content">
+                <aside class="sidebar">
+                    <!-- Accordian -->
+                    <div class="sidebar-content">
+                        <div class="dash">
+                            <a routerLink="/companydashboard"> <button
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                    <h5><img src="assets/icons/dashboard-grid.svg" alt=""> Dashboard</h5>
+                                </button></a>
+                        </div>
+                        <div class="dash">
+                            <a> <button class="btn1 active"
+                                    [ngStyle]="{'background-color': isDarkTheme ? '#36A38D' : '#36A38D','color': isDarkTheme ? 'white' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                    <h5><img src="assets/icons/settingswhite.svg" alt=""> Configuration</h5>
+                                </button></a>
+                        </div>
+                        <div class="dash">
+                            <a routerLink="/companyoptions"> <button
+                                [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                                <h5><img src="assets/icons/optionlistgrey.svg" alt=""> Options</h5>
+                              </button></a>
+                          </div>
+                    </div>
+                </aside>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content style="display: flex; height: 88vh;"  >
+            <div style="height:100%; width: 40px; align-items: center;display: flex;">
+                
+                    
+                
+            </div>
+            <div class="container-fluid add-company">
+                <div class="addCompany">
+                    <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Vessel configuration</h1>
+                    <!-- <button type="button"><a routerLink="/addvessels">+ Add Vessel</a></button> -->
+                </div>
+                <div class="searchbar">
+                    <input class="input-field" [(ngModel)]="filterVessels" type="text"
+                        placeholder="Search vessel name, vessel code  "  [ngStyle]= "{'background-color': isDarkTheme ? '#303030' : '#f8fafb','color': isDarkTheme ? 'white' : 'black'}">
+                    <i><span><img src="assets/icons/search.svg"></span></i>
+                </div>
+                <div class="row">
+                    <table class="companytable">
+                        <thead [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                            <th>
+                                Vessel code
+                            </th>
+                            <th style="text-align: left;">
+                                Vessel Name
+                            </th>
+                            <th>
+                                IMO
+                            </th>
+                            <th>
+                                Built
+                            </th>
+                            <th>
+                            </th>
+
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let vessel of vessels | filter: filterVessels">
+                                <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ vessel.vesselCode }}</td>
+                                <td style="text-align: left;"  [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ vessel.vesselName }}</td>
+                                <td  [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ vessel.vesselImo }}</td>
+                                <td  [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ vessel.vesselYearOfBuilt }}</td>
+                                <td  [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}"> <a routerLink="/companyeditvessel/{{vessel._id}}" class="btn btn-success">
+                                        <i><span><img src="assets/icons/pencil.svg"></span></i></a>
+                                    <button (click)="deleteVessel(vessel._id, vessel.vesselName)"
+                                        class="btn btn-danger">
+                                        <i><span><img src="assets/icons/trash.svg"></span></i></button>
+
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</body>
+
+</html>

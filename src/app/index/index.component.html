@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" href="header.css" /> -->
+    <!-- sidebar js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body style="background-color: #F8FAFB;" class="mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}">
+
+    <!-- <div class="header">
+        <div class="icons">
+            <a href="#" class="logo"><img src="assets/image/Element tree logo new.png"></a>
+        </div>
+        <div class="header-right"> -->
+    <!-- <a class="#" href="#home">Home</a>
+      <a href="#">About Us</a>
+      <a href="#">Help</a> -->
+    <!-- <a class="icon" href="#">Logout <span><i class="fa fa-sign-out" aria-hidden="true"></i></span></a>
+        </div>
+    </div> -->
+    <div class="index-container" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#f8fafb'}">
+        <div>
+            <h3><a routerLink="/dashboard"><span><img src="assets/icons/back.svg"
+                  style="height:22px; width: 22px; margin-bottom: 4px;"></span> Go back</a></h3>
+            
+          </div>
+    
+        <div class="head">
+            <div class="Index-head" style="background-color:#F8FAFB ;padding-right: 20px;" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#f8fafb'}">
+                <h1 style="font-size: 38px; font-weight: bold;" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">Index
+                </h1>
+            </div>
+
+            <div class="progressbar"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                <p style="font-weight: 500;font-size: 20px;padding-left: 20px;"
+                [ngStyle]="{'color': isDarkTheme ? 'white' : '#5C5C5C'}">{{checkListName}} </p>
+                <p style="padding:0px 20px 0px 20px; color: #FF9F40;font-weight: 700;font-size: 20px;">{{progress}} %</p>
+
+                <div class="progress"
+                    style="height: 20px; background-color:#FBFBFB; border-radius: 100px;width: 150px;">
+
+                    <div class="progress-bar" role="progressbar"
+                        style="padding-left: 10px; height: 20px; background-color: #ffebd8;" aria-valuenow="100" [style.width.%]="progress"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    <span class="progress-label">In-progress</span>
+                </div>
+                <p [ngStyle]="{'color': isDarkTheme ? 'white' : '#5C5C5C'}" style="padding:0px 20px 0px 20px;"  >Nov 2022</p>
+            </div>
+
+
+
+            <!-- <div class=" head1 progress" style="height: 20px; background-color: #fff; border-radius: 100px;">
+            <div class="progress-bar" role="progressbar" style="width: 25%; height: 20px; background-color: #ffebd8;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            <span class="progress-label">In-progress</span>
+          </div> -->
+        </div>
+
+
+        <div class="searchbar" style="min-width: 70%;">
+           
+            <span [ngClass]="{'search-icon': true, 'search-icon-clicked': isClicked}" [innerHTML]="searchImage"></span>
+            <input class="input-field" type="text" [(ngModel)]="filterChapters" (click)="changeImage()"
+                placeholder="Search company name, company code" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">
+               
+            <!-- <i><span ><img src="assets/icons/search.svg"></span></i> -->
+            <div class="filter" (click)="openFilterPopup()">
+                <!-- <p style="cursor: pointer;">Filter <i class="fa fa-sliders"></i></p> -->
+                <p style="cursor: pointer;">Filter </p>
+                <a id="modal-button"> <span><img src="assets/icons/filter.svg"></span></a>
+            </div>
+        </div>
+
+        
+
+
+        <mat-accordion>
+
+
+            <mat-expansion-panel *ngFor="let chapter of chapters | unique:'Chapter' | filter: filterChapters"
+                (opened)="panelOpenState = true" (closed)="panelOpenState = false" style=" max-width:70%;">
+
+                <mat-expansion-panel-header >
+                    <mat-panel-title>
+                        Chapter {{ chapter.Chapter }}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                     <span style=" margin-left:320px">   {{ getNumberOfSections(chapter) }} Sections {{ getNumberOfQuestions(chapter) }} questions</span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ng-container class="vertical"
+                    *ngFor="let section of getSectionsForChapter(chapter) | unique:'Section Name'; let i = index ">
+                    <ul class="nav-links" id="nav-links" #itemEl routerLinkActive="active" >
+                        <button [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}"
+                            (click)="showQuestions[section['Section Name']] = !showQuestions[section['Section Name']]; btnToggle(section['Section Name']);">
+                            <img style="height:15px;width:15px" [src]="isDarkTheme ? 
+                            (currentSection === section['Section Name'] ? 'assets/icons/Ellipse1dark.svg' : 'assets/icons/Ellipsedark.svg') : 
+                            (currentSection === section['Section Name'] ? 'assets/icons/Ellipse1.svg' : 'assets/icons/Ellipse.svg')" alt="">
+                          
+                            <!-- <img [src]="sectionImages[section['Section Name']]" style="width: 15px; height:24px ;"> -->
+                            Section
+                            {{chapter.Chapter}}.{{section['Section Name']}}
+                            <img [src]="currentSection === section['Section Name'] ? 'assets/icons/chevron-up.svg' : 'assets/icons/chevron-down.svg'" alt="">
+                            
+                        </button>
+                        <li *ngIf="showQuestions[section['Section Name']]" class="questions" [@fadeInOut]>
+                            <div class="section" style="padding-left:40px; padding-right:150px;"
+                                *ngFor="let question of getQuestionsForSection(section)">
+                                <div style="display: flex;padding: 5px;padding-left: 10px; justify-content: space-between;">
+                                    <div style="display:flex"><div style="width:40px"><span style="font-weight: 700;">{{question['Question No']}}  </span></div> &nbsp;&nbsp;-
+                                    <span style="width:640px;">{{question  ['Question Description'].slice(0,70).concat('.....')}}</span></div> 
+                                    <a routerLink="/dashboard" (click)="sendQuestionNo(question['Question No'])"  style="color:#36A38D ;  text-decoration: none;font-weight: 700; cursor: pointer;">Open</a>
+                                </div>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </ng-container>
+
+
+
+                <!-- <div class="sidebar">
+                    <ul class="nav-links" id="nav-links">
+                        <li *ngFor="let chapter of chapters | unique:'Chapter'" #itemEl routerLinkActive="active">
+                            <div *ngIf="chapter.Chapter.length == 0" class="dropdown-title">
+                                <a [routerLink]="[chapter.Chapter]" style="display: flex; align-items:center; ">
+                                    <span><img src="assets/icons/checkmark.svg"
+                                            style="height:20px; width: 22px;"></span>&nbsp;&nbsp;
+                                    <span class="link_name"
+                                        style="font-weight:600; font-size: 18px;">{{chapter.Chapter}}</span>
+                                </a>
+                            </div>
+                            <div  *ngFor="let subitem of chapters | unique:'Section Name'" class="dropdown-title" (click)="showSubmenu(itemEl)">
+                                <a style="cursor: pointer;">
+                                    <div class="img-container">
+                                        <img class="img" src="assets/icons/disable.svg"
+                                            style="height:15px; width: 16px; margin-bottom: 4px;"></div>&nbsp;&nbsp;
+                                            <ng-container  *ngIf="subitem.Chapter == chapter.Chapter">
+                                    <span class="link_name" style="font-weight:700; font-size: 18px; color: #999999;">Section {{subitem['Section Name']}}</span></ng-container>
+                                </a>
+                                <i class='bx bxs-chevron-down arrow'></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div> -->
+
+            </mat-expansion-panel><br>
+
+
+
+
+        </mat-accordion>
+        <!-- filter -->
+        <div class="modal modal-container filtermodal" tabindex="-1" role="dialog"
+            [ngStyle]="{'display':FilterdisplayStyle}" aria-hidden="true">
+            <!-- By default, height should be set on the component manually -->
+            <ng-scrollbar style="height: 30px">
+
+            </ng-scrollbar>
+            <div class="modal-dialog filterdialog modal-dialog-scrollable  modal-dialog-centered modal-md"
+                role="document">
+                <div class="modal-content filtercontent">
+                    <div class="modal-header">
+                        <h1 class="modal-filtertitle">Filter</h1>
+                        <button type="button" style="border-color:transparent ; background-color:transparent"
+                            (click)="closeFilterPopup()" class="close modalclose" data-dismiss="modal"
+                            aria-label="Close">
+                            <img src="assets/icons/delete-circled-outline.svg">
+                        </button>
+                    </div>
+                    <div class="modal-body filterBody">
+                        <mat-checkbox color="blue">ISM</mat-checkbox>
+                        <hr>
+
+                        <mat-checkbox color="blue">Rank</mat-checkbox>
+                        <hr>
+
+                        <mat-checkbox color="blue">Vessel type</mat-checkbox>
+                        <hr>
+
+                        <mat-checkbox color="blue">ROVIQ sequence </mat-checkbox>
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        pre-board
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        {{panelOpenState ? '' : ''}}
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+
+                                <div class="searchbar"><img src="assets/icons/search.svg" alt="">
+
+                                    <input class="input-field" type="text" placeholder=" Search">
+
+                                </div>
+
+                                <mat-checkbox color="blue">1.Documentation</mat-checkbox>
+                                <hr>
+
+                                <mat-checkbox color="blue">2.Pre-board</mat-checkbox>
+                                <hr>
+
+                                <mat-checkbox color="blue">3.Maindeck</mat-checkbox>
+                                <hr>
+
+                                <mat-checkbox color="blue">4.Lorem ispum</mat-checkbox>
+
+
+
+                            </mat-expansion-panel>
+
+                        </mat-accordion>
+
+
+                    </div>
+
+                    <!-- MODAL -->
+                    <div class="modal-footer" style="display: flex; justify-content: space-between;">
+                        <button type="button"
+                            style="background-color: white; color: #36A38D; border: 2px solid #36A38D;">
+                            + Add Filter
+                        </button>
+                        <button type="button">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ngx-spinner type="ball-atom" color = "#36a38d" size = "medium"   bdColor = "rgba(0, 0, 0, 0.8)">
+        <p style="color: white" > Loading... </p>
+    </ngx-spinner>
+    
+</body>
+
+</html>

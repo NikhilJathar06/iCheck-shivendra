@@ -1,0 +1,32 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" [ngStyle]= "{'background-color': isDarkTheme ? 'black' : 'white'}">
+        <div class="img">
+            <!-- <img height="100px" width="100px" src="assets/image/correct.gif" > -->
+            <video *ngIf="isDarkTheme" height="260" width="260" autoplay>
+                <source src="assets/image/correct.mp4" type="video/mp4"> 
+                </video>
+            <video *ngIf="!isDarkTheme" height="260" width="260" autoplay>
+                <source src="assets/image/Tick.mp4" type="video/mp4">
+            </video>
+
+        </div>
+        <div class="message" [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">
+            <p>{{data.message}}</p>
+        </div>
+    </div>
+
+
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!-- <div class="header">
+        <h2 mat-dialog-title class="dialogTitle">Please Confirm</h2>
+     </div> -->
+<!-- <div mat-dialog-overlay (click)="closeDialog()"></div> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+  <div> <button type="button" style="border: 0; background-color: transparent; float: right;" (click)="closeDialog()"
+      class="close modalclose" data-dismiss="modal" aria-label="Close">
+      <img [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+    </button></div>
+  <div class="dialogContainer" style="height:170px; padding-top: 10px; "
+    [ngStyle]="{'background-color': isDarkTheme ? '#000000' : 'white'}">
+
+    <div mat-dialog-content class="dialogContent" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">
+      How would you like to generate questions?
+    </div>
+    <div mat-dialog-actions class="action" [align]="'center'">
+      <button mar-raised-button data-toggle="modal" data-target="#manualmodel" (click)="openManualModal()"
+        class="cancel">Manual</button>
+      <button mar-raised-button color="#36A38D" data-target="#randommodel" (click)="openRandomModal()"
+        class="cancel no">Random</button>
+    </div>
+  </div>
+
+
+<!-- manual modal -->
+  <div class="modal modal-container mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}" tabindex="-1"
+    role="dialog" [ngStyle]="{'display':manualDisplay}" aria-hidden="true">
+    <div class="modal-dialog width-80 modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+        <div class="modal-header" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <h1 class="modal-title" style="color:#36A38D">Manually generate questions</h1>
+          <button type="button" style="border-color:transparent ; background-color:transparent"
+            (click)="closeManualPopup()" class="close modalclose" data-dismiss="modal" aria-label="Close"
+            [mat-dialog-close]="false">
+            <img [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+          </button>
+        </div>
+        <div class="modal-body randomBody">
+          <div class="filter">
+          <p [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">Selected ({{selectedCount2}}/{{chaptersLength}})</p>
+        </div>
+          <div *ngFor="let chapter of chapters" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black','border-bottom': isDarkTheme ? '1px solid #595959' : '1px solid #E8E8E8'}"
+          style="display: flex;  padding: 5px;" >
+          <mat-checkbox [color]="isDarkTheme ? 'primary' : '#fff'" (change)="updateSelectedCount2($event.checked)"></mat-checkbox>
+          <div style="margin-top: 8px; display: flex; ">
+            <p style="margin: 0px;"  [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}"><b>{{chapter.questionNo}}</b></p>&nbsp;&nbsp;
+            <p style="margin: 0px;" [ngStyle]="{'color': isDarkTheme ? 'white' : '#6A6A6A'}">{{chapter.questionDescription}}</p>
+          </div>
+        </div>
+
+
+          
+        </div>
+        <div class="modal-footer" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <button type="button" (click)="closeManualPopup()" [mat-dialog-close]="false">
+            Generate
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Random modal -->
+
+  <div class="modal modal-containermat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}" tabindex="-1"
+    role="dialog" [ngStyle]="{'display':randomDisplay}" aria-hidden="true">
+    <div class="modal-dialog width-80 modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+       
+        <div class="modal-header" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}" >
+          <h1 class="modal-title" style="color:#36A38D">Random check list</h1>
+          <button type="button" style="border-color:transparent ; background-color:transparent"
+            (click)="closeRandomPopup()" class="close modalclose" data-dismiss="modal" aria-label="Close"
+            [mat-dialog-close]="false">
+            <img [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+          
+          </button>
+        </div>
+        <div class="modal-body randomBody">
+          <div class="filter">
+            <p [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">Selected ({{selectedCount}}/{{chaptersLength}})</p>
+            <!-- <p style="cursor: pointer;">Filter <i class="fa fa-sliders"></i></p> -->
+            <a id="modal-button" (click)="openFilterPopup()" style="cursor: pointer ;">Filter <i><span><img
+                    src="assets/icons/filter.svg"></span></i></a>
+
+          </div>
+
+
+
+          <div *ngFor="let chapter of chapters" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black','border-bottom': isDarkTheme ? '1px solid #595959' : '1px solid #E8E8E8'}"
+            style="display: flex;  padding: 5px;" >
+            <mat-checkbox  [checked]="chapter.selected" (change)="chapter.selected = $event.checked" [color]="isDarkTheme ? 'primary' : '#fff'" (change)="updateSelectedCount($event.checked)"></mat-checkbox>
+            <div style="margin-top: 8px; display: flex; ">
+              <p style="margin: 0px;"  [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}"><b>{{chapter.questionNo}}</b></p>&nbsp;&nbsp;
+              <p style="margin: 0px;" [ngStyle]="{'color': isDarkTheme ? 'white' : '#6A6A6A'}">{{chapter.questionDescription}}</p>
+            </div>
+          </div>
+         
+
+        </div>
+        <div class="modal-footer" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}" >
+          <button type="button" (click)="generateCheckList()" [mat-dialog-close]="false">
+            Generate
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- filter -->
+  <div class="modal modal-container filtermodal" tabindex="-1" role="dialog" [ngStyle]="{'display':FilterdisplayStyle}"
+    aria-hidden="true">
+    <!-- By default, height should be set on the component manually -->
+    <ng-scrollbar style="height: 30px">
+
+    </ng-scrollbar>
+    <div class="modal-dialog filterdialog modal-dialog-scrollable  modal-dialog-centered modal-md" role="document">
+      <div class="modal-content filtercontent" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+        <div class="modal-header" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <h1 class="modal-filtertitle" style="color:#36A38D">Filter</h1>
+          <button type="button" style="border-color:transparent ; background-color:transparent"
+            (click)="closeFilterPopup()" class="close modalclose" data-dismiss="modal" aria-label="Close">
+            <img src="assets/icons/delete-circled-outline.svg">
+          </button>
+        </div>
+        <div class="modal-body filterBody" style="overflow:hidden ;">
+          <mat-checkbox class="filterCheckBox" [color]="isDarkTheme ? 'primary' : '#fff'" style="padding-left:10px ;">
+            <div [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}"> Static </div>
+          </mat-checkbox>
+          <hr style="padding:5px ; margin:0%">
+          
+
+
+          <mat-checkbox class="filterCheckBox" [(ngModel)]="highRisk" [color]="isDarkTheme ? 'primary' : '#fff'" style="padding-left:10px ;">
+            <div [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">High Risk </div>
+          </mat-checkbox>
+          <hr style="padding:5px ; margin:0%">
+
+          <mat-checkbox class="filterCheckBox" [(ngModel)]="mediumRisk" [color]="isDarkTheme ? 'primary' : '#fff'" style="padding-left:10px ;">
+            <div [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">Medium Risk </div>
+          </mat-checkbox>
+          <hr style="padding:5px ; margin:0%">
+
+          <mat-checkbox class="filterCheckBox" [(ngModel)]="lowRisk" [color]="isDarkTheme ? 'primary' : '#fff'" style="padding-left:10px ;">
+            <div [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">Low risk</div>
+          </mat-checkbox>
+        </div>
+
+
+        <div class="modal-footer" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}" >
+          <!-- <button type="button" style="background-color: white; color: #36A38D; border: 2px solid #36A38D;" [mat-dialog-close]="false">
+       Back
+      </button> -->
+          <button type="button" (click)="applyFilter();">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

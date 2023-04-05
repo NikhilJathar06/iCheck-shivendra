@@ -1,0 +1,136 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.heading {
+    padding-left: 25px;
+
+}
+
+h3 {
+    color: #36A38D;
+    cursor: pointer;
+    padding: 20px 0px;
+    font-size: 16px;
+
+}
+
+.dialogContainer {
+    width: 500px;
+    height: 454px;
+    padding-left: 10px;
+
+}
+
+.dialogTitle {
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+}
+
+.dialogContent {
+    font-family: 'Inter';
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: black;
+    font-weight: 600;
+    font-size: 17px;
+    line-break: 5px;
+    line-height: 19px;
+
+}
+
+.subscription-deatils {
+    padding-left: 25px;
+    padding-top: 10px;
+}
+
+.subscription-deatils label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    color: #818181;
+}
+.subscription-deatils p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    color: #1F1F1F;
+}
+.subscription-deatils a{
+    font-family: 'Inter';
+    font-style: normal;
+    text-decoration: none;
+    color: #36A38D;
+    font-size:13px;
+    font-weight: 500;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.subscription-deatils img{
+    cursor: pointer;
+}
+
+
+
+
+
+.currancy-selector {
+    padding-top: 10px;
+}
+
+.action button {
+    /* padding: 6px 24px; */
+
+    gap: 10px;
+    height: 40px;
+    width: 220px;
+    text-align: center;
+    background: #36A38D;
+    border-radius: 35px;
+    outline: none;
+    border: none;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+    margin: 5px;
+}
+
+/* .action .no{
+    border: 1px solid #e8e8e8;
+    color: #000;
+    background-color: #fff;
+} */
+
+.input-group-text {
+    border-radius: 22px;
+    border: 0;
+    outline: 0;
+    border: 1px solid #E8E8E8;
+    background-color: transparent;
+    text-align: center;
+
+}
+
+/* .input-group-text:focus{
+   border-color:  #36A38D;
+        
+} */
+.input {
+    width: 170px;
+    height: 36px;
+    border-radius: 22px;
+    border: 1px solid #E8E8E8;
+    outline: 0;
+}
+
+input:focus {
+    border-color: #36A38D;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iCheck</title>
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+    <div class="wrapper" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#f8fafb'}">
+        <div>
+            <h3><a routerLink="/inspection"><span><img src="assets/icons/back.svg"
+                            style="height:22px;width:22px; margin-bottom: 4px;"></span> Go back</a></h3>
+        </div>
+        <div class="container ">
+
+            <h1>Rectification</h1>
+            <p>The List of Observations: </p>
+            <div>
+                <div *ngFor="let question of questions; let i = index" style="margin-bottom:20px;">
+                    {{ question.questionNo }}: {{ questionDescriptions[i] }}
+                    <button routerLink="/rectification" class="openBtn"
+                        (click)="sendQuestionNo(question.questionNo)">Open</button>
+                    <div style="color: #36A38D; font-size:14px"><i>Status:</i>
+                        <ng-container *ngIf="observationValues[i]"><i>{{ observationValues[i] }}</i></ng-container>
+                        <ng-container *ngIf="!observationValues[i]"><i>Open</i></ng-container><br>
+                         
+                        <ng-container *ngIf="observationValues[i] === 'closed'">
+                            <div><i> Closed At: {{ modifiedAtValues[i] | date: 'MMM dd, y' }}</i></div>
+                          </ng-container>
+                          <ng-container *ngIf="observationValues[i] !== 'closed' && modifiedAtValues[i]">
+                            <div><i> Updated At: {{ modifiedAtValues[i] | date: 'MMM dd, y' }}</i></div>
+                          </ng-container>                       
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

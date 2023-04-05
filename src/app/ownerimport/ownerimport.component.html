@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iCheck</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+      <div class="siderbar-content">
+        <aside class="sidebar">
+          <!-- Accordian -->
+          <div class="sidebar-content">
+            <div class="dash">
+              <a routerLink="/ownerdashboard"> <button  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/dashboard-grid.svg" alt=""> Dashboard</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/companyconfig"> <button class="btn1"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/settings.svg" alt=""> Configuration </h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/vesselconfig"><button class="btn1"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                      <h5><img src="assets/icons/vessel.svg" alt=""> Vessels</h5>
+                  </button></a>
+          </div>
+            <div class="dash">
+                <a routerLink="/ownerinsights"> <button class="btn1"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                    <h5><img src="assets/icons/Insights.svg" alt=""> Insights </h5>
+                  </button></a>
+              </div>
+            <div class="dash">
+              <a routerLink="/ownercalendar"> <button class="btn1"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/calendar.svg" alt=""> Calendar </h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/owneraccesspanel"> <button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/toggle-off.svg" alt=""> Access</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+                <a> <button class="btn1 active" [ngStyle]="{'background-color': isDarkTheme ? '#36A38D' : '#36A38D','color': isDarkTheme ? 'white' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                    <h5><img src="assets/icons/importwhite.svg" alt=""> Import </h5>
+                  </button></a>
+              </div>
+
+          </div>
+        </aside>
+        <!-- <button class="sliderToggle" (click)="sliderToggler()">
+              <i [ngClass]="{'fa-angle-double-right':!isIconClose, 'fa-angle-double-left': isIconClose}" class="fa"></i>
+            </button> -->
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content style="display: flex; height: 88vh;" >
+      <!-- <div style="height:100%; width: 40px; align-items: center;display: flex;">
+        <div style="background-color: white; width:25px; height:850px">
+        <button class="sliderToggle" (click)="sidenav.toggle(); sliderToggler();">
+          <img [src]="curentImage" style="width: 39px; height:39px"> -->
+          <!-- <i [ngClass]="{'fa-angle-double-right':!isIconClose, 'fa-angle-double-left': isIconClose}"
+                      class="fa"></i> -->
+        <!-- </button>
+        </div>
+      </div> -->
+      <div class="container-fluid">
+        <div class="ownerimport">
+          <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}" >Import Checklist</h1>
+          <!-- <button type="button"><a routerLink="/add-company">+ Add Company</a></button> -->
+        </div>
+        <div style="display:flex; align-items: center; height:60px">
+        <div class="upload" style="margin-top:30px" [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+            <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Sire 2.0</h1>
+            <h3>
+              <input type="file" #fileInput name="file" id="file" (change)="fileSelected(); onFileChange(fileInput, 'sire2.0')" style="display: none;">
+              
+              <label for="file" style="color:#36A38D ;">
+                <span class="textLink" >
+              <img [hidden]="fileAdded" src="assets/icons/upload.svg" style="cursor:pointer"  alt=""> <button [hidden]="!fileAdded" (click)="uploadFile(fileInput)" class="upload-btn ">Upload</button> </span></label>
+            </h3>
+             
+        </div>
+        <div style="margin-top:10px;">{{ filename }}</div>
+      </div>
+
+        <div class="upload" [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}" >
+            <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Pse</h1>
+            <h3> <input type="file" name="file" id="file" style="display: none;" >
+              
+              <label for="file" style="color:#36A38D ;"><span class="textLink">
+              <img src="assets/icons/upload.svg" alt="">Upload</span></label></h3>
+              
+        </div>
+        <div class="upload" [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+            <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Place holder 3</h1>
+            <h3> <input type="file" name="file" id="file" style="display: none;" >
+              
+              <label for="file"  style="color:#36A38D ;"><span class="textLink">
+              <img src="assets/icons/upload.svg" alt=""> Upload</span></label></h3>
+        </div>
+        <div class="upload" [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}" >
+            <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Place holder 4</h1>
+            <h3> <input type="file" name="file" id="file" style="display: none;" >
+              
+              <label for="file"  style="color:#36A38D ;"><span class="textLink">
+              <img src="assets/icons/upload.svg" alt=""> Upload</span></label></h3>
+        </div>
+
+        <div class="ImportedChecklist">
+          <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Imported Checklist</h1>
+        </div>
+          <div class="row">
+          <table class="checklistTable">
+              <thead [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+
+                  <th>
+                      Checklist ID
+                  </th>
+                  <th>
+                      Checklist Name
+                  </th>
+                  <th>
+                      Created
+                  </th>
+                 
+                 
+
+              </thead>
+              <tbody>
+                  <tr  class="tr">
+                      <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">#232323232 </td>
+                      <td  [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ dbcheckListName }}</td>
+                      <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">{{ createdAt| date:'dd MMM yyyy' }}</td>
+                      
+                  </tr>
+                  
+                  <!-- <tr  class="tr">
+                    <td  [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">#232323232 </td>
+                      <td [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Checklist Name</td>
+                      <td  [ngStyle]="{'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8','color': isDarkTheme ? '#DDDDDD' : '#5C5C5C'}">Nov,2022</td>
+                    
+                </tr> -->
+
+
+
+
+              </tbody>
+
+
+          </table>
+      </div>
+        <!-- <div class="container">
+          <div class="row">
+            <div class="col-sm-3">
+              <input type="text" #txt1 maxlength="1" (keyup)="move($event, '' , txt1, txt2)">
+            </div>
+            <div class="col-md-3"> 
+              <input type="text" #txt2 maxlength="1" (keyup)="move($event, txt1 , txt2, txt3)">
+            </div>
+            <div class="col-md-3">
+              <input type="text" #txt3 maxlength="1" (keyup)="move($event, txt2 , txt2, txt4)">
+            </div>
+            <div class="col-md-3">
+              <input type="text" #txt4 maxlength="1" (keyup)="move($event, txt3 , txt4, '')">
+            </div>
+          </div>
+        </div> -->
+ 
+
+
+      
+
+     
+        
+
+
+      </div>
+
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</body>
+
+</html>

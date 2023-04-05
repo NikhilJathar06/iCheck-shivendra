@@ -1,0 +1,35 @@
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+
+
+.wrapper {
+   height:89.5vh;
+  
+}
+
+
+.openBtn{
+    background-color: transparent;
+    color: #36A38D;
+    border: none;
+}
+.container h1 {
+    font-weight: 700;
+    font-size: 30px;
+    font-family: 'Inter', sans-serif;
+ 
+ }
+h3 {
+ 
+    padding: 20px 0px;
+    font-size: 20px;
+   
+
+}
+h3 a{
+    text-decoration: none;
+    color: #36A38D;
+    margin-left: 100px;
+}

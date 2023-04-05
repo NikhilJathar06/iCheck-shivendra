@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iCheck</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+      <div class="siderbar-content">
+        <aside class="sidebar">
+          <!-- Accordian -->
+          <div class="sidebar-content">
+            <div class="dash">
+              <a routerLink="/ownerdashboard"> <button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/dashboard-grid.svg" alt=""> Dashboard</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/companyconfig"> <button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/settings.svg" alt=""> Configuration </h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/vesselconfig"><button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/vessel.svg" alt=""> Vessels</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/ownerinsights"> <button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/Insights.svg" alt=""> Insights</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a> <button class="btn1 active" [ngStyle]="{'background-color': isDarkTheme ? '#36A38D' : '#36A38D','color': isDarkTheme ? 'white' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/calendarwhite.svg" alt=""> Calendar </h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/owneraccesspanel"> <button class="btn1"[ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}" >
+                  <h5><img src="assets/icons/toggle-off.svg" alt=""> Access</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/ownerimport"><button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/import.svg" alt=""> Import</h5>
+                </button></a>
+            </div>
+
+          </div>
+        </aside>
+        <!-- <button class="sliderToggle" (click)="sliderToggler()">
+              <i [ngClass]="{'fa-angle-double-right':!isIconClose, 'fa-angle-double-left': isIconClose}" class="fa"></i>
+            </button> -->
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content style="display: flex; height: 88vh;" >
+      <!-- <div style="height:100%; width: 40px; align-items: center;display: flex;">
+        <div style="background-color: white; width:25px; height:850px">
+        <button class="sliderToggle" (click)="sidenav.toggle(); sliderToggler();">
+          <img [src]="curentImage" style="width: 39px; height:39px">
+          
+        </button>
+      </div>
+      </div> -->
+
+      <div class="container-fluid">
+        <div class="calendar">
+          <h1  [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Calendar</h1>
+          <a  routerLink="/calendareventview">Event view</a>
+        </div>
+      
+        <div class="Calendar">
+        <full-calendar  [ngClass]="{'dark-theme': isDarkTheme}" style=" height:600px; padding:20px; 
+        "  [ngStyle]= "{'background-color': isDarkTheme ? '#303030' : '#f8fafb','color': isDarkTheme ? 'white' : '#5E5873'}" [options]="calendarOptions" ></full-calendar>
+        
+        
+    
+    </div>
+   
+
+      </div>
+
+
+
+
+    </mat-sidenav-content>
+  
+       
+
+  </mat-sidenav-container>
+  <ngx-spinner type="ball-atom" color = "#36a38d" size = "medium"   bdColor = "rgba(0, 0, 0, 0.8)">
+    <p style="color: white" > Loading... </p>
+</ngx-spinner>
+
+ <!-- MODAL -->
+ <div class="modal modal-container " tabindex="-1" role="dialog" [ngStyle]="{'display':ModaldisplayStyle}"
+ aria-hidden="true">
+ <!-- By default, height should be set on the component manually -->
+ <ng-scrollbar style="height: 30px">
+
+ </ng-scrollbar>
+ <div class="modal-dialog  modal-dialog-scrollable  modal-dialog-centered modal-lg" role="document">
+   <div class="modal-content "  [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+     <!-- <div class="modal-header">
+           <h1 class="modal-filtertitle">Filter</h1>
+           <button type="button" (click)="closeModalPopup()" class="close modalclose" data-dismiss="modal"
+             aria-label="Close">
+             <img src="assets/icons/delete-circled-outline.svg">
+           </button>
+         </div> -->
+     <div class="modal-body ">
+       <div class="closebtn"> <button type="button" (click)="closeModalPopup()" class="close modalclose"
+         data-dismiss="modal" aria-label="Close">
+         <img [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+       </button></div>
+       <div class="dialogContainer">
+         <div class="heading">
+           <!-- <h3 (click)="closeModalPopup()"><span><img src="assets/icons/back.svg"
+                 style="height:22px; width: 22px; margin-bottom: 4px;"></span> Go
+             back</h3> --> 
+
+           <h2  style="color:#36A38D">Request payment</h2>
+
+         </div>
+         <div *ngIf="singleCompany" class="subscription-details">
+           <div class="row">
+             <div class="col">
+               <label >Company name</label>
+               <p [ngStyle]="{'color': isDarkTheme ? 'white' : '#1F1F1F'}">{{ singleCompany.companyName }}</p>
+             </div>
+             <div class="col">
+               <label>Subscription end</label>
+               <p  [ngStyle]="{'color': isDarkTheme ? 'white' : '#1F1F1F'}">{{ singleCompany.companyEndDate | date: 'MMM dd, y'}}</p>
+             </div>
+           </div>
+           <div class="row">
+             
+             
+             <div class="col email">
+               <label>Emails</label>
+              <div style="display: flex;">
+               <div>
+               <p [ngStyle]="{'color': isDarkTheme ? 'white' : '#1F1F1F'}" *ngFor="let email of singleCompany.picemails; let i = index;">
+                 {{ email }}   
+                 <span *ngIf="editMode && picemailIndex == i" >
+                   <input type="text" [(ngModel)]="picemailEdit" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','color': isDarkTheme ? 'white' : 'black'}" style="border: 1px solid #e4e4e4 ">
+                   <button (click)="savePicEmail()" >Save</button>
+                 </span>
+                 <span><img style="margin-left: 5px;cursor: pointer;" src="assets/icons/pencil.svg" (click)="editPicEmail(i, email)"></span>
+                 <span><img style="margin-left: 5px; cursor: pointer;" src="assets/icons/trash.svg" (click)="deleteEmail(i)"></span>
+              </p>
+             </div>
+             <div style="padding-left:15px ;padding-top: 4px;"><img style="cursor:pointer" src="assets/icons/plus.svg" (click)="addNewPicEmail()"></div>
+             </div>
+
+             
+           
+            
+              <p [ngStyle]="{'color': isDarkTheme ? 'white' : '#1F1F1F'}" *ngFor="let email of singleCompany.accEmails; let i = index; ">
+                 {{ email }}
+                 <span *ngIf="editMode1 && accEmailIndex == i">
+                   <input type="text" [(ngModel)]="accEmailEdit" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','color': isDarkTheme ? 'white' : 'black'}" style="border: 1px solid #e4e4e4 ">
+                   <button (click)="saveAccEmail()">Save</button>
+                 </span>
+             
+                 <span><img style="margin-left: 5px;cursor: pointer;" src="assets/icons/pencil.svg" (click)="editAccEmail(i, email)"></span>
+                 <span><img style="margin-left: 5px; cursor: pointer;" src="assets/icons/trash.svg" (click)="deleteaccEmail(i)"></span>
+               </p>
+
+
+
+             <div>
+               <p *ngIf="editMode && picemailIndex === -1">
+                 <input type="text" [(ngModel)]="newPicEmail" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white', 'color': isDarkTheme ? 'white' : 'black'}" style="border: 1px solid #e4e4e4 ">
+                 <button (click)="saveNewPicEmail()">Save</button>
+               </p>
+
+             </div>
+         </div>
+             
+
+
+             <div class="col">
+               <label>Previous price</label>
+               <p  [ngStyle]="{'color': isDarkTheme ? 'white' : '#1F1F1F'}"><span  matTooltip="{{ getTooltipMessage(singleCompany.companySubscriptionCurrency) }}">{{singleCompany.companySubscriptionCurrency}}</span>
+                 {{ singleCompany.companySubscriptionRate }} <a style="color:#36A38D; cursor:pointer"> View
+                   More</a> </p>
+             </div>
+           </div>
+           <div class="row">
+             <div class="col">
+               <label>Subscription Rate</label>
+               <div class="currancy-selector" >
+                 <div class="input-group input-group-sm mb-3" >
+
+                   <select class="input-group-text" name="Currancy" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','color': isDarkTheme ? 'white' : 'black'}" style="cursor: pointer;">
+
+                     <option value="₹" title="Indian rupee">₹</option>
+
+                     <option value="US$" title="US dollar">US$</option>
+
+                     <option value="€" title="Euros">€</option>
+
+                     <option value="S$" title="Singapore dollar">S$</option>
+
+                     <option value="£" title="British Pound">£</option>
+
+                     <span class="input-group-text">
+                     </span>
+                   </select>
+                   <input type="number" class=" input" name="subscriptionRate" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white','color': isDarkTheme ? 'white' : 'black'}">
+
+                 </div>
+                 <mat-error style="margin-left:10px" *ngIf="subscriptionRateError">Enter subscription rate</mat-error>
+
+               </div>  
+             </div>
+           </div>
+         </div>
+         <!-- <div mat-dialog-content class="dialogContent">{{data.message}}</div> -->
+         <div class="action" [align]="'start'">
+
+           <button class="payment" (click)="sendPaymentRequest(singleCompany.companyName)">Send payment request</button>
+           <!-- <button mar-raised-button color="#36A38D" class="cancel no" [mat-dialog-close]="false">{{data.btn2value}}</button> -->
+         </div>
+       </div>
+
+     </div>
+   </div>
+ </div>
+</div>
+
+</body>
+
+</html>

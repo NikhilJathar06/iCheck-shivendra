@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <defs>
+  <clipPath id="clip0_631_5125">
+   <rect fill="white" height="16" id="svg_1" width="16"/>
+  </clipPath>
+ </defs>
+ <g class="layer">
+  <title>Layer 1</title>
+  <g clip-path="url(#clip0_631_5125)" id="svg_2">
+   <path d="m5.33,6.67l2.67,0l2.67,0" fill="none" id="svg_3" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+   <path d="m5.33,9.33l1.34,0l1.33,0" fill="none" id="svg_4" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+   <path d="m8,14.67c3.68,0 6.67,-2.99 6.67,-6.67c0,-3.68 -2.99,-6.67 -6.67,-6.67c-3.68,0 -6.67,2.99 -6.67,6.67c0,1.21 0.33,2.35 0.9,3.33l-0.56,3l3,-0.56c0.98,0.57 2.12,0.9 3.33,0.9z" fill="none" id="svg_5" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,15 @@
+<!-- <div class="header">
+        <h2 mat-dialog-title class="dialogTitle">Please Confirm</h2>
+     </div> -->
+<!-- <div mat-dialog-overlay (click)="closeDialog()"></div> -->
+<!-- <div> <button type="button" style="border: 0; background-color: transparent; float: right;" (click)="closeDialog()" class="close modalclose"
+    data-dismiss="modal" aria-label="Close">
+    <img src="assets/icons/delete-circled-outline.svg">
+  </button></div> -->
+<div class="dialogContainer"  [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+    <div mat-dialog-content class="dialogContent" [ngStyle]="{'color': isDarkTheme ? 'white' : 'black'}">{{data.message}}</div>
+    <div mat-dialog-actions class="action" [align]="'center'">
+        <button mar-raised-button class="cancel" [mat-dialog-close]="true">{{data.btn1value}}</button>
+        <button mar-raised-button color="#36A38D" class="cancel no" [mat-dialog-close]="false">{{data.btn2value}}</button>
+    </div>
+</div>

@@ -1,0 +1,439 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+
+  
+
+<div class="header mat-app-background" [ngStyle]="{
+  'background-color': isDarkTheme ? '#1C1C1E' : 'white',
+  'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'
+}" [ngClass]="{ 'dark-theme-mode': isDarkTheme }">
+<div class="icons">
+  <a class="logo" (click)="sendHome()"><img src="assets/image/Element tree logo new.png" /></a>
+  <mat-slide-toggle (change)="toggleDarkTheme()">
+    dark theme
+  </mat-slide-toggle>
+</div>
+
+<div class="header-right" *ngIf="!isLoginPage && isLoggedIn">
+  <div style="
+      padding-top: 13px;
+      width: 80px;
+      padding-right: 20px;
+      display: flex;
+      justify-content: space-between;
+      height: 80px;
+    " *ngIf="role == 'company'">
+    <div>
+      <img [src]="
+          isDarkTheme
+            ? 'assets/icons/communicationlogdark.svg'
+            : 'assets/icons/communicationlog.svg'
+        " style="height: 20px; width: 20px" (click)="openCommunicationPopup()" />
+    </div>
+    <div>
+      <div *ngIf="!notiCount" >
+      <img *ngIf="!isDarkTheme" src="assets/icons/bell.svg"
+        (click)="openNotificationPopup()" style="height: 20px; width: 20px" />
+      <img *ngIf="isDarkTheme " src="assets/icons/belldark.svg"
+        (click)="openNotificationPopup()" style="height: 20px; width: 20px" />
+      </div>
+        
+      <div *ngIf="notiCount > 0" matBadge="{{ notiCount }}" matBadgeSize="medium">
+        <img *ngIf="!isDarkTheme " src="assets/icons/bellgreen.svg"
+          (click)="openNotificationPopup()" style="height: 20px; width: 20px" />
+        <img *ngIf="isDarkTheme" src="assets/icons/bellgreen.svg"
+          (click)="openNotificationPopup()" style="height: 20px; width: 20px" />
+      </div>
+    </div>
+    <!-- <mat-icon matBadgeColor="primary"></mat-icon> -->
+  </div>
+  <div>
+    <a matTooltip="Logout" class="icon" (click)="logout()">Logout
+      <span><img src="assets/icons/log-out.svg" style="height: 20px; width: 18px" /></span></a>
+  </div>
+</div>
+</div>
+
+<div>
+<router-outlet (activate)="onActivate($event)"> </router-outlet>
+</div>
+
+<!--Communications Sections  -->
+<div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{ display: CommunicationdisplayStyle }"
+aria-hidden="true" >
+<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+  <div class="modal-content popup-content" >
+    <div class="modal-body comm-body" [ngStyle]="{ 'background-color': isDarkTheme ? '#303030' : '#f8fafb' }">
+      <div class="container">
+        <div class="communicationsHeader">
+          <h1 style="color:#36A38D">Communications</h1>
+          <div class="commHeaderRight">
+            <div>
+              <select [(ngModel)]="selectedVesselName" (ngModelChange)="onVesselSelect($event)">
+                <option value="Choose a Vessel" disabled>
+                  Choose a Vessel
+                </option>
+                <option *ngFor="let vessel of vesselsArray" [ngValue]="vessel.name">
+                  {{ vessel.name }}
+                </option>
+                <option>All Vessels</option>
+              </select>
+            </div>
+
+            <div>
+              <button type="button" (click)="closeCommunicationPopup()" class="close modalclose" data-dismiss="modal"
+                aria-label="Close">
+                <img src="assets/icons/delete-circled-outline.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <p class="newMessage"  [ngStyle]="{ 'color': isDarkTheme ? 'white' : 'black' }">New Message</p>
+        <div *ngIf="selectedVesselName !== 'All Vessels'" >
+          <div class="sectionDiv" *ngFor="let chatLog of unReadQuestions" [ngStyle]="{ 'background-color': isDarkTheme ? '#1C1C1E' : 'white' }">
+            <div class="subSection">
+              <a class="questions">{{ chatLog.vesselName }}</a>
+              <a class="questions">#{{ chatLog.checklistId }}</a>
+              <a class="questions">Question {{ chatLog.questionNo }}</a>
+            </div>
+            <a class="open" (click)="openChatsPopup(selectedVesselName, chatLog.questionNo,  chatLog.checklistId)">Open</a>
+          </div>
+        </div>
+
+        <div class="allsectionDiv" *ngIf="selectedVesselName === 'All Vessels'">
+          <div class="sectionDiv" style="display: flex; justify-content: space-between;" *ngFor="let chatLog of AllunReadQuestions">
+            <div class="subSection">
+              <a class="questions">{{ chatLog.name }}</a>
+              <a class="questions">#{{ chatLog.checklistId }}</a>
+              <a class="questions">Question {{ chatLog.questionNo }}</a>
+            </div>
+            <a class="open" (click)="openChatsPopup(chatLog.name, chatLog.questionNo,  chatLog.checklistId)">Open</a>
+          </div>
+        </div>
+
+        <br />
+        <p class="newMessage"  [ngStyle]="{ 'color': isDarkTheme ? 'white' : 'black' }">Previous communication</p>
+        <div *ngIf="selectedVesselName !== 'All Vessels'">
+          <div class="sectionDiv" *ngFor="let chatLog of ReadQuestions"  [ngStyle]="{ 'background-color': isDarkTheme ? '#1C1C1E' : 'white' }">
+            <ng-container>
+              <a class="questions">{{ chatLog.vesselName }}</a>
+              <a class="questions">#{{ chatLog.checklistId }}</a>
+              <a class="questions">Question {{ chatLog.questionNo }}</a>
+              <a class="open" (click)="openChatsPopup(selectedVesselName, chatLog.questionNo,  chatLog.checklistId)">Open</a>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="allsectionDiv" *ngIf="selectedVesselName === 'All Vessels'">
+          <div class="sectionDiv" *ngFor="let chatLog of AllReadQuestions">
+            <a class="questions">{{ chatLog.name }}</a>
+            <a class="questions">#{{ chatLog.checklistId }}</a>
+            <a class="questions">Question {{ chatLog.questionNo }}</a>
+            <a class="open" (click)="openChatsPopup(chatLog.name, chatLog.questionNo,  chatLog.checklistId)">Open</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- communication modal -->
+
+<div class="modal modal-container" tabindex="-1" role="dialog" [ngStyle]="{'display':ChatsdisplayStyle}"
+aria-hidden="true">
+<div class="modal-dialog  modal-dialog-centered modal-lg" role="document">
+  <div class="modal-content popup-content"
+      [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+      <div class="modal-header"
+          [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'}">
+          <div class="modal-Communicationheader" style="width:100%">
+              <div style="display:flex;justify-content:space-between;width:100%">
+                  <h1 class="modal-Communicationtitle" style="color:#36A38D"><img
+                          src="assets/icons/chat-lines.svg" style="height:30px ;"> Communication Log</h1>
+                  <button type="button" (click)="closeChatsPopup(vesselName)" class="close modalclose"
+                      data-dismiss="modal" aria-label="Close">
+                      <img
+                          [src]="isDarkTheme ? 'assets/icons/delete-circled-outlinedark.svg' : 'assets/icons/delete-circled-outline.svg'">
+                  </button>
+              </div>
+              <h3 [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}"
+                  style="color: #686868;font-size: 18px;font-style:bold ;font-weight: 700;padding-top: 5px;">
+                  {{vesselName}}</h3>
+                  <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" style="color: #686868;font-size: 15px;font-weight: 700;margin: 0px;">
+                    ChecklistID:{{checklistId}}</p>
+                    <p [ngStyle]="{'color': isDarkTheme ? '#fff' : '#2F3640'}" style="color: #686868;font-size: 15px;margin: 0px;">
+                      Chapter {{commChapter}} > Section {{commSection}} > Question {{commQuestion}}</p>
+                    
+           
+
+          </div>
+
+
+
+      </div>
+      <div class="modal-body chatbody" [ngStyle]="{'background-color': isDarkTheme ? '#303030' : 'white'}">
+          <div class="chatArea" style="height:400px">
+              <ng-container *ngFor="let item of chats | orderBy: 'chatLogs.timestamp' ">
+                  <div *ngFor="let chat of item.chats; let i = index">
+                      <div class="datetime"
+                          *ngIf="(i === 0) || ((chat.timestamp | date: 'dd MM yyyy') !== (item.chats[i - 1].timestamp | date: 'dd MM yyyy'))"
+                          style="color: #36A38D;text-align: center;">
+                          <h6><span [ngStyle]="{'background-color': isDarkTheme ? '#303030' : '#fff'}">{{
+                                  chat.timestamp | date: 'dd/MM/yyyy'}}</span></h6>
+                      </div>
+                      <div class="chat" [ngClass]="{'senderChat': chat.role === 'company'}">
+                          <p *ngIf="chat.role === 'company'">{{ chat.message }} <span style="font-size: 9px;">{{ chat.timestamp |
+                                  date: 'hh:mm a' }}</span> </p>
+                          <p *ngIf="chat.role === 'vessel'"> <span
+                                  style="font-size: 9px;">{{ chat.timestamp | date: 'hh:mm a' }}</span> {{ chat.message }}</p>
+
+                      </div>
+                  </div>
+              </ng-container>
+          </div>
+          <div class="chattext">
+              <form [formGroup]="communicationForm">
+                  <!-- <input type="text" placeholder="Type Here!"
+style="height: 60px;width:742px;border-radius:10px;border-color: #CCCCCC;">
+<button class="sendButton">
+<img src="assets/icons/sendbutton.svg">
+</button> -->
+                  <mat-form-field *ngFor="let e of chatLog | unique:'questionNo'" style="width:100%;">
+
+                      <input matInput formControlName="communicationInput">
+                      <!-- <input #fileUpload type="file" (change)="importFile($event)" style="display:none"> -->
+                      <!-- <button  mat-icon-button matPrefix (click)="fileUpload.click()">
+<span> <img src="assets/icons/attachment.svg" style="height: 18px;"></span>
+</button> -->
+                      <button mat-icon-button matSuffix
+                          (click)="sendChat(e['Question No'], vesselName); ">
+                          <img src="assets/icons/sendbutton.svg" style="height: 18px;">
+                      </button>
+                  </mat-form-field>
+              </form>
+          </div>
+
+      </div>
+
+
+  </div>
+</div>
+</div>
+
+<!-- Notification Modal -->
+
+<div class="modal modal-container notimodal" tabindex="-1" role="dialog"
+[ngStyle]="{ display: NotificationdisplayStyle }" aria-hidden="true">
+<!-- By default, height should be set on the component manually -->
+<ng-scrollbar style="height: 30px"> </ng-scrollbar>
+<div class="modal-dialog notiModalDialog modal-dialog-scrollable modal-md" role="document">
+  <div class="modal-content filtercontent" [ngStyle]="{ 'background-color': isDarkTheme ? '#303030' : 'white' }">
+    <div class="modal-header" [ngStyle]="{
+        'background-color': isDarkTheme ? '#1C1C1E' : 'white',
+        'border-color': isDarkTheme ? '#1C1C1E' : '#E8E8E8'
+      }">
+      <div style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        ">
+        <h1 class="modal-filtertitle" style=" margin-top: 10px" [ngStyle]="{ 'color': isDarkTheme ? 'white' : 'black' }">
+          Notifications
+        </h1>
+        
+        <img *ngIf="!isDarkTheme" style="height: 20px; margin-left: 10px" src="assets/icons/bell-notification.svg" />
+        <img *ngIf="isDarkTheme" style="height: 20px; margin-left: 10px" src="assets/icons/bell-notificationdark.svg" />
+
+      </div>
+      <button type="button" (click)="closeNotificationPopup()" class="close modalclose" data-dismiss="modal"
+        aria-label="Close">
+        <img [src]="
+            isDarkTheme
+              ? 'assets/icons/delete-circled-outlinedark.svg'
+              : 'assets/icons/delete-circled-outline.svg'
+          " />
+      </button>
+    </div>
+
+
+
+
+    <div class="modal-body filterBody" [ngStyle]="{
+        'background-color': isDarkTheme ? '#303030' : '#F8FAFB',
+        color: isDarkTheme ? 'white' : 'black'
+      }" *ngIf="!isDarkTheme">
+
+      <ng-container *ngIf="notiCount > 0; else empty">
+
+        <div *ngFor="let data of notificationCommunicationData">
+          <!-- notification for new communication -->
+          <div class="hoverCursor" *ngIf="data.notificationType == 'New Communication'" (click)="openChatsPopup(data.vesselName, data.questionNo, data.checklistId); closeNotificationModalFromCommunication()"
+            style="padding: 10px; border-bottom: 1px solid #d3d3d3; ">
+            <!-- <div class="hoverCursor" *ngFor="let notification of notiLogs" style="cursor: pointer" (click)="
+                openChatsPopup(notification.questionNo, notification.name)
+              " class="notificationDiv"> -->
+            <div style="display: flex;">
+              <img src="assets/icons/newCommunication.svg" style="height: 20px; margin-top: 3px;" />
+              <p style="margin-left: 5px; font-weight: 700; font-size: 16px;">
+                {{ data.notificationType }}
+              </p>
+            </div>
+            <p style="color: #8E8E8E; font-size: 16px; margin: 0px;">
+              You have new communication from {{ data.vesselName }} from Question
+              {{data.questionNo}} of checklist #{{data.checklistId}}
+            </p>
+
+            <!-- </div> -->
+          </div>
+          <!-- notification for new checklist -->
+          <div class="hoverCursor" *ngIf="data.notificationType == 'New checklist created'"
+            style="padding: 10px; border-bottom: 1px solid #d3d3d3;">
+            <div style="display: flex;">
+              <img src="assets/icons/options-black.svg" style="height: 20px; margin-top: 3px;" />
+              <p style="margin-left: 5px; font-weight: 700; font-size: 16px;">
+                {{ data.notificationType }}
+              </p>
+            </div>
+            <p style="color: #8E8E8E; font-size: 16px;">
+              {{data.vesselName}} has created a new checklist
+            </p>
+          </div>
+          
+
+          <!-- notification for checklist submitted -->
+          <div class="hoverCursor" *ngIf="data.notificationType == 'New checklist submitted'"
+            style="padding: 10px; border-bottom: 1px solid #d3d3d3;">
+            <div style="display: flex;">
+              <img src="assets/icons/submitted-checklist.svg" style="height: 20px; margin-top: 3px;" />
+              <p style="margin-left: 5px; font-weight: 700; font-size: 16px;">
+                {{ data.notificationType }}
+              </p>
+            </div>
+            <p style="color: #8E8E8E; font-size: 16px;">
+              {{data.vesselName}} has submitted a checklist
+            </p>
+          </div>
+
+          <!-- notification for Due Date -->
+
+          <div class="hoverCursor" *ngIf="data.notificationType == 'Due Date' "
+            style="padding: 10px; border-bottom: 1px solid #d3d3d3;">
+            <div style="display: flex;">
+              <img src="assets/icons/dueDate.svg" style="height: 20px; margin-top: 3px;" />
+              <p style="margin-left: 5px; font-weight: 700; font-size: 16px;">
+                {{ data.notificationType }}
+              </p>
+            </div>
+            <p style="color: #8E8E8E; font-size: 16px;">
+              {{ data.remainingDays }} day(s) remaining for ending the subscription on {{ companyEndDate | date: 'MMM
+              dd, y' }}
+            </p>
+          </div>
+        </div>
+        
+      </ng-container>
+      <ng-template #empty>
+        <p style="padding: 20px;">No new notifications for now</p>
+      </ng-template>
+    </div>
+
+
+<!-- dark theme -->
+
+    <div class="modal-body filterBody" [ngStyle]="{
+      'background-color': isDarkTheme ? '#303030' : '#F8FAFB',
+      color: isDarkTheme ? 'white' : 'black'
+    }" *ngIf="isDarkTheme">
+
+    <ng-container *ngIf="notiCount > 0; else empty">
+
+      <div *ngFor="let data of notificationCommunicationData">
+        <!-- notification for new communication -->
+        <div class="hoverCursordark" *ngIf="data.notificationType == 'New Communication'" (click)="openChatsPopup(data.vesselName, data.questionNo, data.checklistId); closeNotificationModalFromCommunication()"
+          style="padding: 10px; border-bottom: 1px solid #d3d3d3; ">
+          <!-- <div class="hoverCursor" *ngFor="let notification of notiLogs" style="cursor: pointer" (click)="
+              openChatsPopup(notification.questionNo, notification.name)
+            " class="notificationDiv"> -->
+          <div style="display: flex;">
+            <img src="assets/icons/newCommunicationdark.svg" style="height: 20px; margin-top: 3px;" />
+            <p style="margin-left: 5px; font-weight: 700; font-size: 16px;">
+              {{ data.notificationType }}
+            </p>
+          </div>
+          <p style="color: #8E8E8E; font-size: 16px; margin: 0px;">
+            You have new communication from {{ data.vesselName }} from Question
+            {{data.questionNo}} of checklist #{{data.checklistId}}
+          </p>
+
+          <!-- </div> -->
+        </div>
+        <!-- notification for new checklist -->
+        <div class="hoverCursordark" *ngIf="data.notificationType == 'New checklist created'"
+          style="padding: 10px; border-bottom: 1px solid #d3d3d3;">
+          <div style="display: flex;">
+            <img src="assets/icons/options-blackdark.svg" style="height: 20px; margin-top: 3px;" />
+            <p style="margin-left: 5px; font-weight: 700; font-size: 16px;">
+              {{ data.notificationType }}
+            </p>
+          </div>
+          <p style="color: #8E8E8E; font-size: 16px;">
+            {{data.vesselName}} has created a new checklist
+          </p>
+        </div>
+        
+
+        <!-- notification for checklist submitted -->
+        <div class="hoverCursordark" *ngIf="data.notificationType == 'New checklist submitted'"
+          style="padding: 10px; border-bottom: 1px solid #d3d3d3;">
+          <div style="display: flex;">
+            <img src="assets/icons/submitted-checklistdark.svg" style="height: 20px; margin-top: 3px;" />
+            <p style="margin-left: 5px; font-weight: 700; font-size: 16px;">
+              {{ data.notificationType }}
+            </p>
+          </div>
+          <p style="color: #8E8E8E; font-size: 16px;">
+            {{data.vesselName}} has submitted a checklist
+          </p>
+        </div>
+
+        <!-- notification for Due Date -->
+
+        <div class="hoverCursordark" *ngIf="data.notificationType == 'Due Date' "
+          style="padding: 10px; border-bottom: 1px solid #d3d3d3;">
+          <div style="display: flex;">
+            <img src="assets/icons/dueDate.svg" style="height: 20px; margin-top: 3px;" />
+            <p style="margin-left: 5px; font-weight: 700; font-size: 16px;">
+              {{ data.notificationType }}
+            </p>
+          </div>
+          <p style="color: #8E8E8E; font-size: 16px;">
+            {{ data.remainingDays }} day(s) remaining for ending the subscription on {{ companyEndDate | date: 'MMM
+            dd, y' }}
+          </p>
+        </div>
+      </div>
+      
+    </ng-container>
+    <ng-template #empty>
+      <p style="padding: 20px;">No new notifications for now</p>
+    </ng-template>
+  </div>
+  </div>
+</div>
+</div>
+  
+</body>
+</html>
+

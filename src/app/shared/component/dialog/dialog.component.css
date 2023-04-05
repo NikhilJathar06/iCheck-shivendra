@@ -1,0 +1,64 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dialogContainer{
+    width: 100%;
+    height: 100%;
+   /* padding-left: 10px; */
+   
+   /* box-shadow: 0px 0px 10px 0px #000000; */
+
+}
+.dialogTitle{
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+}
+
+.dialogContent{ 
+    font-family: 'Inter';
+    display: flex;
+    align-items: center;
+    text-align: center;
+   
+    font-weight: 600;
+    font-size: 17px;
+    line-break: 5px;
+    line-height: 25px;
+
+}
+
+.action{
+    padding: 0;
+    margin: 0;
+}
+
+.action button{
+    /* padding: 6px 24px; */
+    
+    gap: 10px;
+    height: 40px;
+    width: 87px;
+    text-align: center;
+    background: #36A38D;
+    border-radius: 35px;
+    outline: none;
+    border: none;
+    color: #fff;
+    margin: 5px;
+}
+
+.action .no{
+    border: 1px solid #e8e8e8;
+    color: #000;
+    background-color: #fff;
+}
+.modalclose{
+    border: none;
+    background-color: transparent;
+    background-color: #36A38D;
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iCheck</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+
+  <!-- <button (click)="sidenav.toggle();">
+    Toggle
+  </button> -->
+  <!-- <div class="main-layout" style="background-color: #f8fafb;">   -->
+  <mat-sidenav-container style="height:850px ;">
+    <mat-sidenav #sidenav mode="side" opened="true"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+      <div class="siderbar-content">
+        <aside class="sidebar">
+          <!-- Accordian -->
+          <div class="sidebar-content">
+            <div class="dash">
+              <a> <button class="btn1 active"  [ngStyle]="{'background-color': isDarkTheme ? '#36A38D' : '#36A38D','color': isDarkTheme ? 'white' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}" >
+                  <h5><img src="assets/icons/dashboard-gridwhite.svg" alt=""> Dashboard</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/companyconfig"> <button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/settings.svg" alt=""> Configuration</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/vesselconfig"><button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/vessel.svg" alt=""> Vessels</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/ownerinsights"><button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/Insights.svg" alt=""> Insights</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/ownercalendar"> <button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/calendar.svg" alt=""> Calendar</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/owneraccesspanel"><button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img src="assets/icons/toggle-off.svg" alt=""> Access</h5>
+                </button></a>
+            </div>
+            <div class="dash">
+              <a routerLink="/ownerimport"><button class="btn1" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white','border-color': isDarkTheme ? '#848484' : '#E8E8E8'}">
+                  <h5><img  src="assets/icons/import.svg" alt=""> Import</h5>
+                </button></a>
+            </div>
+
+
+
+
+
+          </div>
+        </aside>
+        
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content >
+      <!-- <div style="background-color: white; width:25px; height:850px">
+      <button class="sliderToggle" (click)="sidenav.toggle(); sliderToggler();">
+        <img [src]="curentImage" style="width: 39px;">
+      </button>
+    </div> -->
+      <div class="container-fluid">
+        <div class="addCompany">
+          <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : 'black'}">Owner dashboard</h1>
+          <button type="button"><a routerLink="/add-company">+ Add Company</a></button>
+        </div>
+        <div class="searchbar">
+          <i><span><img src="assets/icons/search.svg"></span></i>
+          <input class="input-field" type="text" placeholder="Search company name, company code"
+          [ngStyle]= "{'background-color': isDarkTheme ? '#303030' : '#f8fafb','color': isDarkTheme ? 'white' : 'black'}">
+          <i><span><img src="assets/icons/search.svg"></span></i>
+        </div>
+       
+          <div class="d-flex flex-row flex-nowrap overflow-auto" style="margin-bottom: 20px;">
+            
+            <div class="card card-body "  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+              <div class="companies-growth" style="display:flex ;"> 
+              <h3 [ngStyle]= "{'color': isDarkTheme ? 'white' : '#676767'}">Total Companies</h3>
+              <div class="companies-growth-graph"  style="display:flex ;"> 
+                <img src="assets/icons/increase.svg" alt="">
+                <h5>10.0%</h5>
+              </div> 
+            </div>
+           
+              <div class="card-companies">
+                <h2 [ngStyle]= "{'color': isDarkTheme ? 'white' : '#020202'}">{{ companies.length }}</h2>
+                <a href=""><img src="assets/icons/arrow left.svg" alt=""></a>
+              </div>
+              <p>Companies </p>
+
+            </div>
+            <div class="card card-body"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+              <div class="observation-growth" style="display:flex ;"> 
+                <h3 [ngStyle]= "{'color': isDarkTheme ? 'white' : '#676767'}">Total Observations</h3>
+                <div class="observation-growth-graph"  style="display:flex ;"> 
+                  <img src="assets/icons/increase.svg" alt="">
+                  <h5>10.0%</h5>
+                </div> 
+              </div>
+              <div class="card-companies">
+                <h2 [ngStyle]= "{'color': isDarkTheme ? 'white' : '#020202'}">16,000</h2>
+                <a href=""><img src="assets/icons/arrow left.svg" alt=""></a>
+              </div>
+              <p>Observations</p>
+
+            </div>
+            <div class="card card-body"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+              <div class="ships-growth" style="display:flex ;"> 
+                <h3 [ngStyle]= "{'color': isDarkTheme ? 'white' : '#676767'}">All Ships</h3>
+                <div class="ships-growth-graph"  style="display:flex ;"> 
+                  <img src="assets/icons/decrease.svg" alt="">
+                  <h5>10.0%</h5>
+                </div> 
+              </div>
+              <div class="card-companies">
+                <h2 [ngStyle]= "{'color': isDarkTheme ? 'white' : '#020202'}">{{ vessels.length }}</h2>
+                <a href=""><img src="assets/icons/arrow left.svg" alt=""></a>
+              </div>
+              <p>Ships</p>
+            </div>
+            <div class="card card-body"  [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+              <div class="ships-growth" style="display:flex ;"> 
+                <h3 [ngStyle]= "{'color': isDarkTheme ? 'white' : '#676767'}">Total Issues</h3>
+                <div class="ships-growth-graph"  style="display:flex ;"> 
+                  <img src="assets/icons/decrease.svg" alt="">
+                  <h5>10.0%</h5>
+                </div> 
+              </div>
+              <div class="card-companies">
+                <h2 [ngStyle]= "{'color': isDarkTheme ? 'white' : '#020202'}">1500</h2>
+                <a href=""><img src="assets/icons/arrow left.svg" alt=""></a>
+              </div>
+              <p>Issues </p>
+            </div>
+
+          </div>
+          
+          <div class="chart-wrapper">
+            <div class="owner-dashboard-row">
+            <div>
+              <h1  [ngStyle]= "{'color': isDarkTheme ? 'white' : '#676767'}">Top Question issues</h1>
+              <div style=" padding: 5px; border-radius: 10px;" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                <canvas baseChart width="300" height="251" type="bar" [data]="barChartData"
+                  [options]="barChartOption" ></canvas>
+              </div>
+            </div>
+
+            <div class="questions">
+              <h1  [ngStyle]= "{'color': isDarkTheme ? 'white' : '#676767'}">Questions</h1>
+              <div style=" padding: 5px; border-radius: 10px;" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                <canvas id="doughnutChart"  baseChart width="250" height="251" type="doughnut" [data]="doughnutChartData"
+                  [options]="doughnutChartOption" [plugins]="[ChartDataLabels]" ></canvas>
+              </div>
+            </div>
+
+
+            <div class="companies">
+              <h1  [ngStyle]= "{'color': isDarkTheme ? 'white' : '#676767'}">Companies</h1>
+              <div style=" padding: 5px; border-radius: 10px;" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+                <a href="">View more</a>
+                <canvas baseChart width="300" height="251" type="bar" [data]="barChartData1"
+                  [options]="barChartOption1"></canvas>
+              </div>
+            </div>
+
+
+          
+        </div>
+        
+      </div>
+      <div class="owner-dashboard-row" style="margin-top:30px">
+        <div class="questions">
+          <h1  [ngStyle]= "{'color': isDarkTheme ? 'white' : '#676767'}"> Open Observations</h1>
+          <div style=" padding: 5px; border-radius: 10px;" [ngStyle]="{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+            <div style="display:flex; justify-content:flex-end"><a style="text-decoration: none; color: #36A38D; font-size:14px; font-weight:600" routerLink="/openobservation">Open</a></div>
+            <canvas id="doughnutChart2"  baseChart width="250" height="251" type="doughnut" [data]="doughnutChartData2"
+              [options]="doughnutChartOption2" [plugins]="[ChartDataLabels]"></canvas>
+          </div>
+        </div>
+      </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <!-- </div> -->
+</body>
+
+</html>

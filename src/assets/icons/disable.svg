@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" version="1.1" xml:space="preserve">
+ <desc>Created with Fabric.js 3.5.0</desc>
+
+ <g class="layer">
+  <title>Layer 1</title>
+  <rect fill="#ffffff" height="100%" id="svg_1" width="100%" x="0" y="0"/>
+  <g id="480220" transform="matrix(41.3223 0 0 41.3223 499.9998 499.9998)">
+   <g id="svg_2">
+    <g id="svg_3" transform="matrix(1 0 0 1 0 0)">
+     <path d="m6,11.5l3,3l7,-7" fill="none" fill-rule="nonzero" id="svg_4" stroke="rgb(221,221,221)" stroke-dashoffset="0" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" stroke-width="1.5" transform=" translate(-11, -11)"/>
+    </g>
+    <g id="svg_5" transform="matrix(1 0 0 1 0 0)">
+     <path d="m11,21c5.52,0 10,-4.48 10,-10c0,-5.52 -4.48,-10 -10,-10c-5.52,0 -10,4.48 -10,10c0,5.52 4.48,10 10,10z" fill="none" fill-rule="nonzero" id="svg_6" stroke="rgb(221,221,221)" stroke-dashoffset="0" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" stroke-width="1.5" transform=" translate(-11, -11)"/>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

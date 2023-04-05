@@ -1,0 +1,218 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+:root { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  :root { font-family: 'Inter var', sans-serif; }
+}
+
+/* .mat-progress-bar {
+    .mat-progress-bar-fill::after{
+        background: #007bff;
+    }
+    .mat-progress-bar-buffer{
+        background: white;
+    }
+} */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.active{
+    background-color: #36A38D;
+}
+
+mat-dialog-content{
+    border-radius: 50px;
+}
+
+.fc .fc-daygrid-day-number{
+    color: #6E6B7B;
+    text-decoration: none;
+}
+
+.dark-theme .fc-daygrid-day-number{
+    color: white;
+    text-decoration: none;
+}
+
+.fc-col-header-cell-cushion{
+    color: #6E6B7B;
+    text-decoration: none;
+
+}
+.dark-theme .fc-col-header-cell-cushion{
+    color: white;
+    text-decoration: none;
+}
+
+
+
+
+.fc-col-header-cell-cushion:hover{
+    color: #6E6B7B;
+}
+
+.fc-daygrid-day-frame{
+    text-align: left;
+}
+
+.fc-event{
+    color: #FF3B30;
+    background-color: #FFF0EF;
+}
+
+
+.fc-event:hover{
+    color: #FF3B30;
+    background-color: red;
+}
+
+.fc-today-button{
+    padding: 100px;
+    background-color: red;
+    border-color: red;
+    color: black;
+}
+.fc-day-today{
+    background: #daf5ef!important;
+  
+}
+.dark-theme  .fc-day-today{
+    background: #2C3E50!important;
+  
+}
+
+
+
+  
+
+  .mat-mdc-snack-bar-container {
+    --mat-mdc-snack-bar-button-color: black;    
+    --mdc-snackbar-container-color: #36A38D;
+    --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
+}
+
+
+.fc .fc-prevYear-button, .fc-prev-button, .fc-next-button, .fc-nextYear-button{
+    background-color: transparent!important;
+    color: black!important;
+    border: none!important;
+    box-shadow: 1px 1px transparent!important;
+    border-color: red!important;
+
+}
+.dark-theme  .fc-prevYear-button, .dark-theme  .fc-prev-button, .dark-theme  .fc-next-button, .dark-theme  .fc-nextYear-button{
+    color: white!important;
+}
+
+.fc .fc-prevYear-button:hover, .fc-prev-button:hover, .fc-next-button:hover, .fc-nextYear-button:hover{
+    border: none!important;
+    border-color: red!important;
+    outline: none!important;
+    background-color: transparent!important;
+    color: #36A38D!important;
+   
+}
+
+
+
+.fc .fc-today-button{
+    box-shadow: 1px 1px transparent!important;
+    background-color: #36A38D!important;
+    border: none!important;
+    border-radius: 20px!important;
+    width: 100px !important;
+    text-transform: uppercase;
+
+ 
+}
+
+  
+
+.fc-scrollgrid-sync-inner::before{
+    background-color: red;
+}
+.chart-legend [data]{
+    position: bottom;
+}
+
+
+
+::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+   
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #e8e8e8a7;
+    height: 5px;
+    width: 5px;
+  }
+
+  
+
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #36A38D;
+      border-radius: 25px;
+      width:15px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #146e5cc2;
+  }
+
+
+
+
+
+
+
+  .mdc-menu-surface.mat-mdc-select-panel{
+    padding: 0px!important;
+  }
+  .mdc-menu-surface.mat-mdc-select-panel:hover{
+    background-color: #36A38D!important;
+    
+  }
+  .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+    background: #36A38D!important;
+   
+  
+}
+.mat-primary .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    color: white;
+}
+/* 
+.mat-datepicker-content {
+background: linear-gradient(135deg, #36A38D, #FFF0EF);
+} */
+
+.ck-content{
+    background-color: red;
+}
+
+
+.custom-background-color {
+    background-color: #ff0000; /* Replace with your desired color value */
+  }
+
+
+
+.mat-checkbox .mat-checkbox-frame {
+    border-color: #fa3131;
+}
+
+ .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #fa3131 !important;
+}
+
+.dark-theme.mat-datepicker-content .mat-calendar {
+   
+    background: darkred!important;
+}

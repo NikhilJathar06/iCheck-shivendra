@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="assets/icons/style.css"> -->
+    <title>iCheck</title>
+</head>
+
+<body  class="mat-app-background " [ngClass]="{'dark-theme-mode':isDarkTheme}">
+    <h3><a routerLink="/openobservation"><span><img src="assets/icons/back.svg"
+        style="height:22px; width: 22px; margin-bottom: 4px;"></span> Go back</a></h3>
+    <div class="container"  [ngStyle]= "{'background-color': isDarkTheme ? '#303030' : '#fafafa'}">
+        <h1 [ngStyle]= "{'color': isDarkTheme ? 'white' : '#2F3640'}">Open Issues</h1>
+       
+   <div *ngFor="let question of questions; let i = index">
+    <div  class="upload" style="margin-top:30px" [ngStyle]= "{'background-color': isDarkTheme ? '#1C1C1E' : 'white'}">
+         <p>Question  {{question.questionNo}}</p>
+         <a style="cursor:pointer" (click)="sendQuestionNo(question.questionNo);" >Open</a>
+       
+    </div>
+    <div style="color: #36A38D; font-size:16px; margin-left: 52px;"><i>Status:</i>
+        <ng-container *ngIf="observationValues[i]"><i>{{ observationValues[i] }}</i></ng-container>
+        <ng-container *ngIf="!observationValues[i]"><i>Open</i></ng-container><br>
+         
+        <ng-container *ngIf="observationValues[i] === 'closed'">
+            <div><i> Closed At: {{ modifiedAtValues[i] | date: 'MMM dd, y' }}</i></div>
+          </ng-container>
+          <ng-container *ngIf="observationValues[i] !== 'closed' && modifiedAtValues[i]">
+            <div><i> Updated At: {{ modifiedAtValues[i] | date: 'MMM dd, y' }}</i></div>
+          </ng-container>                       
+    </div>
+</div>
+</div>
+</body>
+
+</html>
